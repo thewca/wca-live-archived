@@ -1,0 +1,29 @@
+{
+  "name": "wca-live",
+  "version": "0.0.0",
+  "description": "REST API to serve WCA results",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_ENV=dev nodemon ./",
+    "lint": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "config": "1.29.2",
+    "express": "4.16.2"
+  },
+  "devDependencies": {
+    "eslint": "4.15.0",
+    "nodemon": "1.14.11",
+    "pre-commit": "1.2.2"
+  },
+  "nodemonConfig": {
+    "ext": "*.js",
+    "verboise": true
+  },
+  "pre-commit": [
+    "lint"
+  ]
+}
