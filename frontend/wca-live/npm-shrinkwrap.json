@@ -4,8 +4,13 @@
   "dependencies": {
     "@angular/animations": {
       "version": "5.2.2",
-      "from": "@angular/animations@>=5.2.0 <6.0.0",
+      "from": "https://registry.npmjs.org/@angular/animations/-/animations-5.2.2.tgz",
       "resolved": "https://registry.npmjs.org/@angular/animations/-/animations-5.2.2.tgz"
+    },
+    "@angular/cdk": {
+      "version": "5.1.0",
+      "from": "@angular/cdk@latest",
+      "resolved": "https://registry.npmjs.org/@angular/cdk/-/cdk-5.1.0.tgz"
     },
     "@angular/common": {
       "version": "5.2.2",
@@ -32,6 +37,11 @@
       "from": "@angular/http@>=5.2.0 <6.0.0",
       "resolved": "https://registry.npmjs.org/@angular/http/-/http-5.2.2.tgz"
     },
+    "@angular/material": {
+      "version": "5.1.0",
+      "from": "@angular/material@latest",
+      "resolved": "https://registry.npmjs.org/@angular/material/-/material-5.1.0.tgz"
+    },
     "@angular/platform-browser": {
       "version": "5.2.2",
       "from": "@angular/platform-browser@>=5.2.0 <6.0.0",
@@ -52,6 +62,11 @@
       "from": "core-js@>=2.4.1 <3.0.0",
       "resolved": "https://registry.npmjs.org/core-js/-/core-js-2.5.3.tgz"
     },
+    "hammerjs": {
+      "version": "2.0.8",
+      "from": "hammerjs@latest",
+      "resolved": "https://registry.npmjs.org/hammerjs/-/hammerjs-2.0.8.tgz"
+    },
     "rxjs": {
       "version": "5.5.6",
       "from": "rxjs@>=5.5.6 <6.0.0",
@@ -66,6 +81,11 @@
       "version": "1.9.0",
       "from": "tslib@>=1.7.1 <2.0.0",
       "resolved": "https://registry.npmjs.org/tslib/-/tslib-1.9.0.tgz"
+    },
+    "web-animations-js": {
+      "version": "2.3.1",
+      "from": "web-animations-js@latest",
+      "resolved": "https://registry.npmjs.org/web-animations-js/-/web-animations-js-2.3.1.tgz"
     },
     "zone.js": {
       "version": "0.8.20",
