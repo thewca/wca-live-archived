@@ -1,6 +1,6 @@
-import { IBaseDto } from './iBaseDto';
+import { Model } from './model';
 
-export class SolveTimeDto implements IBaseDto {
+export class SolveTime extends Model {
   public centiseconds: number;
   public moveCount: number;
   public puzzlesSolved: number;

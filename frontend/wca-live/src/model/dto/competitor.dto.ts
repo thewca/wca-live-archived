@@ -1,6 +1,7 @@
 import { EventDto } from './event.dto';
+import { IBaseDto } from './iBaseDto';
 
-export class CompetitorDto {
+export class CompetitorDto implements IBaseDto {
   public id: number;
   public wcaId: string;
   public name: string;
