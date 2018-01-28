@@ -57,6 +57,11 @@
       "from": "@angular/router@>=5.2.0 <6.0.0",
       "resolved": "https://registry.npmjs.org/@angular/router/-/router-5.2.2.tgz"
     },
+    "@angular/service-worker": {
+      "version": "5.2.2",
+      "from": "@angular/service-worker@latest",
+      "resolved": "https://registry.npmjs.org/@angular/service-worker/-/service-worker-5.2.2.tgz"
+    },
     "core-js": {
       "version": "2.5.3",
       "from": "core-js@>=2.4.1 <3.0.0",
