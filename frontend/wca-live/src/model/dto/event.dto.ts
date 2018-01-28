@@ -1,6 +1,6 @@
-import { RoundDTO } from './round.dto';
+import { RoundDto } from './round.dto';
 
-export class EventDTO {
+export class EventDto {
   public id: string;
-  public rounds: RoundDTO[];
+  public rounds: RoundDto[];
 }

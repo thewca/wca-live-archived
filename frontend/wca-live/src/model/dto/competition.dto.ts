@@ -1,9 +1,9 @@
-import { EventDTO } from './event.dto';
+import { EventDto } from './event.dto';
 
-export class CompetitionDTO {
+export class CompetitionDto {
   public id: string;
   public name: string;
   public startDate: string;
   public endDate: string;
-  public events: EventDTO[];
+  public events: EventDto[];
 }

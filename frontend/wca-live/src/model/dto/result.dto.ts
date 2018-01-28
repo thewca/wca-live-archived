@@ -1,9 +1,9 @@
-import { SolveTimeDTO } from './solveTime.dto';
+import { SolveTimeDto } from './solveTime.dto';
 
-export class ResultDTO {
+export class ResultDto {
   public personId: number;
   public pos: number;
-  public average: SolveTimeDTO;
-  public values: SolveTimeDTO[];
+  public average: SolveTimeDto;
+  public values: SolveTimeDto[];
   public noShow: boolean;
 }

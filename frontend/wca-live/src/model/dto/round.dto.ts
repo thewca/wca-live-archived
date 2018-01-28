@@ -1,6 +1,6 @@
-import { ResultDTO } from './result.dto';
+import { ResultDto } from './result.dto';
 
-export class RoundDTO {
+export class RoundDto {
   public number: number;
-  public results: ResultDTO[];
+  public results: ResultDto[];
 }
