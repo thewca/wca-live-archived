@@ -1,0 +1,328 @@
+openapi: 3.0.0
+# Added by API Auto Mocking Plugin
+servers:
+# Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/worldcubeassociation/WCA-Live/0.1.0
+  - description: Official home of the api
+    url: https://wcalive.worldcubeassociation.org/api/v0
+info:
+  description: Serves results for the WCA-Live client.
+  version: "0.1.1"
+  title: WCA-Live API
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+paths:
+  /competitions:
+    get:
+      summary: Returns competitions
+      operationId: getCompetitions
+      description: returns the competitions imported in the server.
+      responses:
+        '200':
+          description: get imported competitions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Competition'
+  /competitions/{competitionId}:
+    get:
+      summary: Gets a competition
+      operationId: getCompetition
+      description: Given a competitionId, returns the competition.
+      parameters:
+        - $ref: '#/components/parameters/competitionParam'
+      responses:
+        '200':
+          description: The specified competition
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Competition'
+        '404':
+          description: Competition Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Imports a competition
+      operationId: importCompetition
+      description: Given a competitionId, fetches the competition from the WCA Website and imports it.
+      parameters:
+        - $ref: '#/components/parameters/competitionParam'
+      responses:
+        '201':
+          description: Competition Imported.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Competition'
+        '500':
+          description: Error importing competition.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /competitions/:competitionId/results/:eventId-r:roundNumber:
+    get:
+      summary: Returns results for a round
+      description: Given the eventId and roundNumber, returns the results for a competition.
+      parameters:
+        - $ref: '#/components/parameters/competitionParam'
+        - $ref: '#/components/parameters/eventParam'
+        - $ref: '#/components/parameters/roundParam'
+      responses:
+        '200':
+          description: The Results
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Result'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /competitions/:competitionId/results/:eventId-r:roundNumber/:personId:
+    put:
+      parameters:
+        - $ref: '#/components/parameters/competitionParam'
+        - $ref: '#/components/parameters/eventParam'
+        - $ref: '#/components/parameters/roundParam'
+      summary: Sets results for a competitor
+      responses:
+        '200':
+          description: The updated result for the competitor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /competitions/:competitionId/results/:eventId-r:roundNumber/advance:
+    post:
+      parameters:
+        - $ref: '#/components/parameters/competitionParam'
+        - $ref: '#/components/parameters/eventParam'
+        - $ref: '#/components/parameters/roundParam'
+      summary: Advances competitors to the next round
+      description: Advances competitors in this round to the next round based on the wcif advancement data. Returns a detailed error if this is not possible. Takes an optional query parameter specifying how many persons to advance for now shows.
+      responses:
+        '200':
+          description: Competitors Advanced
+          content:
+            application/json: {}
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /competitions/:competitionId/persons/:personId:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/competitionParam'
+        - $ref: '#/components/parameters/personParam'
+      summary: Returns all results for a person
+      responses:
+        '200':
+          description: The specified person
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Competitor'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /competitions/:competitionId/sync-wcif:
+    post:
+      summary: Syncs the wcif with the WCA website
+      responses:
+        '200':
+          description: Competition Sync'd
+          content:
+            application/json: {}
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    wcaId:
+      type: string
+      example: 2016HOOV01
+      description: A WCA assigned ID for a competitor
+    competitionId:
+      type: string
+      example: ExampleCompetition2018
+      description: A WCA assigned ID for a competition
+    personId:
+      type: integer
+      example: 22
+      description: A unique ID assigned to a competitor per competition
+    Competition:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/competitionId'
+        name:
+          type: string
+        date:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        events:
+          description: List of events being held by ID
+          type: array
+          items:
+            $ref: '#/components/schemas/Result'
+    Event:
+      type: object
+      description: A container for a list of rounds
+      properties:
+        id:
+          $ref: '#/components/parameters/eventParam'
+        rounds:
+          type: array
+          items:
+            $ref: '#/components/schemas/Round'
+    Round:
+      type: object
+      description: A round for an event. Contains an array of the results
+      properties:
+        number:
+          type: integer
+          example: 3
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Result'
+    SolveTime:
+      type: object
+      description: Versatile data type to store results for normal timed, fmc and multi-blind events.
+      properties:
+        centiseconds:
+          type: integer
+          example: 555
+        moveCount:
+          type: integer
+          example: 22
+        puzzlesSolved:
+          type: integer
+          example: 40
+        puzzlesAttempted:
+          type: integer
+          example: 42
+    Result:
+      type: object
+      properties:
+        personId:
+          $ref: '#/components/schemas/personId'
+        pos:
+          type: integer
+          example: 12
+          description: Where this result places in the round
+        average:
+          $ref: '#/components/schemas/SolveTime'
+          description: The WCA average of the results. If the round is an average, then this is calculated taking out the best and worst times and averaging the 3 remaining. If the round if a mean, it is simply the average of the 3 times. Lastly, if neither, this should be null.
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/SolveTime'
+          maxLength: 5
+          description: A list of the times in the result
+        noShow:
+          type: boolean
+          default: false
+          description: Flag for whether or not a competitor did not show up for a round. If this is true, values should be empty.
+    Competitor:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/personId'
+        wcaId:
+          $ref: '#/components/schemas/wcaId'
+        name:
+          type: string
+          description: The given full name of a competitor
+        eventResults:
+          type: array
+          format: Result
+          items:
+            $ref: '#/components/schemas/Event'
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+  parameters:
+    competitionParam:
+      name: competitonId
+      in: query
+      description: WCA assigned ID for a competition
+      required: true
+      style: form
+      explode: false
+      schema:
+        $ref: '#/components/schemas/competitionId'
+    eventParam:
+      name: eventId
+      in: query
+      description: WCA assigned ID for an event
+      required: true
+      style: form
+      explode: false
+      schema:
+        type: string
+      example: '333'
+    roundParam:
+      name: competitonId
+      in: query
+      description: A number indicating the round for an event. Increases starting from 1
+      required: true
+      style: form
+      explode: false
+      schema:
+        type: number
+      example: 3
+    personParam:
+      name: personId
+      in: query
+      description: The ID of a competitor
+      required: true
+      style: form
+      explode: false
+      schema:
+        $ref: '#/components/schemas/personId'
