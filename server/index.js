@@ -21,6 +21,8 @@ app.get('/', (req, res) => {
   res.end('Hello World');
 });
 
+app.use(require('./middleware/errors'));
+
 /* Run */
 
 app.listen(config.port || 8000, '0.0.0.0', (err) => {
