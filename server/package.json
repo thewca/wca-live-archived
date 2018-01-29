@@ -12,10 +12,14 @@
   "license": "ISC",
   "dependencies": {
     "config": "1.29.2",
+    "connect-mongo": "2.0.1",
     "express": "4.16.2",
     "express-session": "1.15.6",
+    "mongoose": "5.0.2",
     "morgan": "1.9.0",
-    "passport": "0.4.0"
+    "passport": "0.4.0",
+    "passport-wca": "1.0.3",
+    "rest-api-errors": "1.2.1"
   },
   "devDependencies": {
     "eslint": "4.15.0",

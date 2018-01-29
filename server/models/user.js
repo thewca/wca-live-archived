@@ -14,6 +14,9 @@ const schema = new mongoose.Schema({
   wca_id: {
     type: String
   },
+  delegate_status: {
+    type: String
+  }
 });
 
 module.exports = mongoose.model('User', schema, 'users');
