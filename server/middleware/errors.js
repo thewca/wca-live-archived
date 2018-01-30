@@ -9,7 +9,7 @@ module.exports = function (err, req, res, next) {
   }
 
   res.status(error.status || 500).json({
-    code: error.code || 500,
+    code: error.code || error.status || 500,
     message: error.message || STATUS_CODES[error.status],
   });
 
