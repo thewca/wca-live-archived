@@ -18,6 +18,6 @@ module.exports = new mongoose.Schema({
   },
   registration: [{
     type: String,
-    enum: Events.map(event => event.id)
+    enum: Events.map((event) => event.id)
   }]
 });

@@ -58,7 +58,7 @@ app.use('/*', () => {
   throw new NotFound();
 });
 
-app.use(require('./middleware/errors'));
+app.use(require('./middlewares/errors'));
 
 /* Run */
 mongoose.connect(config.mongodb);

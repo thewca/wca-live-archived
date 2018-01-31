@@ -23,12 +23,25 @@ module.exports = {
       "always"
     ],
     "no-console": [
-      1
+      "warn"
     ],
     "no-unused-vars": [
-      1
+      "warn"
     ],
     "space-in-brackets": [
+      "always"
+    ],
+    "func-style": [
+      "error",
+      "expression", {
+        "allowArrowFunctions": true
+      }
+    ],
+    "prefer-arrow-callback": [
+      "error"
+    ],
+    "arrow-parens": [
+      "error",
       "always"
     ]
   }

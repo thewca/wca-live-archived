@@ -19,11 +19,11 @@ describe('Competitions', () => {
     it('Should GET all the competitions', () =>
       chai.request(app)
         .get('/api/competitions/')
-        .then(function (res) {
+        .then((res) => {
           res.should.have.status(200);
           res.body.should.be.a('array');
           res.body.length.should.be.eql(0);
-        }).catch(function (err) {
+        }).catch((err) => {
           throw err;
         }));
   });

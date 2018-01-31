@@ -123,47 +123,39 @@ wca.RoundFormats = [{
 wca.Rounds = [{
   id: 'd',
   name: 'Combined First round',
-  code: 'd',
   combined: true,
 }, {
   id: '1',
   name: 'First round',
-  code: '1',
   combined: false,
 }, {
   id: '2',
   name: 'Second round',
-  code: '2',
   combined: false,
 }, {
   id: 'e',
   name: 'Combined Second round',
-  code: 'e',
   combined: true,
 }, {
   id: 'g',
   name: 'Combined Third Round',
-  code: 'g',
   combined: true,
 }, {
   id: '3',
   name: 'Semi Final',
-  code: '3',
   combined: false,
 }, {
   id: 'c',
   name: 'Combined Final',
-  code: 'c',
   combined: true,
 }, {
   id: 'f',
   name: 'Final',
-  code: 'f',
   combined: false,
 }];
 
-wca.getEventById = (id) => wca.Events.find({id});
-wca.getFormatById = (id) => wca.Formats.find({id});
-wca.getRoundById = (id) => wca.Rounds.find({id});
+wca.getEventById = (id) => wca.Events.find((e) => e.id === id);
+wca.getFormatById = (id) => wca.Formats.find((f) => f.id === id);
+wca.getRoundById = (id) => wca.Rounds.find((r) => r.id === id);
 
 module.exports = wca;

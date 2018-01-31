@@ -1,7 +1,7 @@
 const express = require('express');
 const WCAStrategy = require('passport-wca').Strategy;
 const User = require('./models/user');
-const auth = require('./middleware/auth');
+const auth = require('./middlewares/auth');
 
 module.exports = (app, passport) => {
   const router = express.Router();
@@ -55,7 +55,7 @@ module.exports = (app, passport) => {
     res.redirect('/');
   });
 
-  app.get('/api/v0/me', auth, (req, res) => {
+  app.get('/api/me', auth, (req, res) => {
     res.json(req.user);
   });
 

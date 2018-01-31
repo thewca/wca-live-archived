@@ -1,7 +1,7 @@
 const { STATUS_CODES } = require('http');
 const { APIError, InternalServerError } = require('rest-api-errors');
 
-module.exports = function (err, req, res, next) {
+module.exports = (err, req, res, next) => {
   let error = err instanceof APIError ? err : new InternalServerError();
 
   if(process.env.NODE_ENV !== 'production') {

@@ -14,7 +14,7 @@ module.exports = new mongoose.Schema({
   },
   format: {
     type: String,
-    enum: RoundFormats.map(format => format.id)
+    enum: RoundFormats.map((format) => format.id)
   },
   timeLimit: {
     centiseconds: {
