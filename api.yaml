@@ -1,11 +1,4 @@
 openapi: 3.0.0
-# Added by API Auto Mocking Plugin
-servers:
-# Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/worldcubeassociation/WCA-Live/0.1.0
-  - description: Official home of the api
-    url: https://wcalive.worldcubeassociation.org/api/v0
 info:
   description: Serves results for the WCA-Live client.
   version: "0.1.1"
@@ -195,7 +188,7 @@ components:
           $ref: '#/components/schemas/competitionId'
         name:
           type: string
-        date:
+        startDate:
           type: string
           format: date
         endDate:
@@ -220,9 +213,15 @@ components:
       type: object
       description: A round for an event. Contains an array of the results
       properties:
+        id:
+          type: string
+          example: '333-r1'
         number:
           type: integer
           example: 3
+        format:
+          type: string
+          example: '1'
         results:
           type: array
           items:
@@ -248,7 +247,7 @@ components:
       properties:
         personId:
           $ref: '#/components/schemas/personId'
-        pos:
+        position:
           type: integer
           example: 12
           description: Where this result places in the round
@@ -265,7 +264,7 @@ components:
           type: boolean
           default: false
           description: Flag for whether or not a competitor did not show up for a round. If this is true, values should be empty.
-    Competitor:
+    Person:
       type: object
       properties:
         id:
@@ -275,6 +274,11 @@ components:
         name:
           type: string
           description: The given full name of a competitor
+        registration:
+          eventIds:
+            type: array
+            items:
+              $ref: '#/components/parameters/eventParam'
         eventResults:
           type: array
           format: Result
