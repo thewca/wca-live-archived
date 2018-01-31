@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const { NotFound } = require('rest-api-errors');
 const app = express();
 
 mongoose.Promise = Promise;
@@ -51,19 +52,23 @@ app.use('/auth/wca', require('./auth')(app, passport));
 
 /* Routes */
 
-app.get('/', (req, res) => {
-  res.end('Hello World');
+app.use('/api', require('./api'));
+
+app.use('/*', () => {
+  throw new NotFound();
 });
 
 app.use(require('./middleware/errors'));
 
 /* Run */
-mongoose.connect(config.mongodb).then(() => {
-  app.listen(config.port || 8000, '0.0.0.0', (err) => {
-    if (err) {
-      console.log(err);
-    }
+mongoose.connect(config.mongodb);
 
-    console.log(`Listening on port ${config.port}. Access at: http://0.0.0.0:${config.port}/`);
-  });
+const server = app.listen(config.port || 8000, '0.0.0.0', (err) => {
+  if (err) {
+    console.log(err);
+  }
+
+  console.log(`Listening on port ${config.port}. Access at: http://0.0.0.0:${config.port}/`);
 });
+
+module.exports = server;
