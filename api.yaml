@@ -7,8 +7,56 @@ info:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 paths:
-  /competitions:
+  /auth/wca/login:
     get:
+      tags:
+        - authentication
+      summary: Begins oauth flow by redirecting the user to login through the WCA website
+      parameters:
+        - name: redirect
+          in: query
+          description: Url to redirect user to after oauth flow has finished
+          schema:
+            type: string
+            example: 'https://localhost:3000/'
+      responses:
+        '302':
+          description: Redirects user to WCA website to begin authentication
+  /auth/wca/logout:
+    get:
+      tags:
+        - authentication
+      summary: Logs user out
+      responses:
+        '302':
+          description: Redirects user to /
+  /api/me:
+    get:
+      tags:
+        - authentication
+        - api
+      summary: Returns the user's profile
+      responses:
+        '200':
+          $ref: '#/components/schemas/User'
+  /api/me/competitions:
+    get:
+      tags:
+        - api
+      summary: Returns the user's list of not competitions from the wca website
+      responses:
+        '200':
+          description: A list of competitions summarized to a few fields
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+  /api/competitions:
+    get:
+      tags:
+        - api
       summary: Returns competitions
       operationId: getCompetitions
       description: returns the competitions imported in the server.
@@ -21,8 +69,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Competition'
-  /competitions/{competitionId}:
+  /api/competitions/{competitionId}:
     get:
+      tags:
+        - api
       summary: Gets a competition
       operationId: getCompetition
       description: Given a competitionId, returns the competition.
@@ -48,6 +98,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     post:
+      tags:
+        - api
       summary: Imports a competition
       operationId: importCompetition
       description: Given a competitionId, fetches the competition from the WCA Website and imports it.
@@ -72,8 +124,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /competitions/:competitionId/results/:eventId-r:roundNumber:
+  /api/competitions/:competitionId/results/:eventId-r:roundNumber:
     get:
+      tags:
+        - api
       summary: Returns results for a round
       description: Given the eventId and roundNumber, returns the results for a competition.
       parameters:
@@ -95,8 +149,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /competitions/:competitionId/results/:eventId-r:roundNumber/:personId:
+  /api/competitions/:competitionId/results/:eventId-r:roundNumber/:personId:
     put:
+      tags:
+        - api
       parameters:
         - $ref: '#/components/parameters/competitionParam'
         - $ref: '#/components/parameters/eventParam'
@@ -115,8 +171,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /competitions/:competitionId/results/:eventId-r:roundNumber/advance:
+  /api/competitions/:competitionId/results/:eventId-r:roundNumber/advance:
     post:
+      tags:
+        - api
       parameters:
         - $ref: '#/components/parameters/competitionParam'
         - $ref: '#/components/parameters/eventParam'
@@ -134,8 +192,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /competitions/:competitionId/persons/:personId:
+  /api/competitions/:competitionId/persons/:personId:
     get:
+      tags:
+        - api
       parameters:
         - $ref: '#/components/parameters/competitionParam'
         - $ref: '#/components/parameters/personParam'
@@ -146,15 +206,17 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Competitor'
+                $ref: '#/components/schemas/Person'
         default:
           description: unexpected error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /competitions/:competitionId/sync-wcif:
+  /api/competitions/:competitionId/sync-wcif:
     post:
+      tags:
+        - api
       summary: Syncs the wcif with the WCA website
       responses:
         '200':
@@ -181,6 +243,20 @@ components:
       type: integer
       example: 22
       description: A unique ID assigned to a competitor per competition
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: WCA account user ID
+        email:
+          type: string
+        name:
+          type: string
+        wcaId:
+          $ref: '#/components/schemas/wcaId'
+        delegateStatus:
+          type: string
     Competition:
       type: object
       properties:
@@ -275,10 +351,12 @@ components:
           type: string
           description: The given full name of a competitor
         registration:
-          eventIds:
-            type: array
-            items:
-              $ref: '#/components/parameters/eventParam'
+          type: object
+          properties:
+            eventIds:
+              type: array
+              items:
+                $ref: '#/components/parameters/eventParam'
         eventResults:
           type: array
           format: Result
