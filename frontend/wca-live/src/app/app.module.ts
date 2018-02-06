@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { CommonServicesModule } from './common-services/common-services.module';
+import { CommonUiModule } from './common-ui/common-ui.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { CommonServicesModule } from './common-services/common-services.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    CommonServicesModule
+    CommonServicesModule,
+    CommonUiModule
   ],
   providers: [],
   bootstrap: [AppComponent]
