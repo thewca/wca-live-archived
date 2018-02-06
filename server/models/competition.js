@@ -11,16 +11,22 @@ const schema = new mongoose.Schema({
     type: String,
     required: true
   },
-  startDate: {
-    type: String
+  schedule: {
+    startDate: {
+      type: String
+    },
+    numberOfDays: {
+      type: Number
+    }
   },
-  endDate: {
-    type: Date
+  persons: {
+    type: [Person],
+    required: true
   },
-  persons: [Person],
-  events: [Event]
-}, {
-  _id: false
+  events: {
+    type: [Event],
+    required: true
+  }
 });
 
 module.exports = mongoose.model('Competition', schema, 'competitions');

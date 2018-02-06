@@ -4,13 +4,8 @@ const { RoundFormats } = require('../../lib/wca');
 
 module.exports = new mongoose.Schema({
   id: {
-    type: String
-  },
-  number: {
-    type: Number,
-    required: true,
-    min: 1,
-    max: 4
+    type: String,
+    required: true
   },
   format: {
     type: String,

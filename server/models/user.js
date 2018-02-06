@@ -13,10 +13,14 @@ const schema = new mongoose.Schema({
     type: String,
     required: true
   },
-  wca_id: {
+  wcaId: {
     type: String
   },
-  delegate_status: {
+  delegateStatus: {
+    type: String,
+    required: true
+  },
+  accessToken: {
     type: String,
     required: true
   },

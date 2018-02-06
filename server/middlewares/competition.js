@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
   Competition.findOne({ id: competitionId }).exec()
     .then((competition) => {
       if (!competition) {
-        throw new new NotFound(404, `Competition '${competitionId}' not found`);
+        throw new NotFound(404, `Competition '${competitionId}' not found`);
       }
 
       req.competition = competition;

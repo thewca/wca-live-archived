@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const express = require('express');
 const WCAStrategy = require('passport-wca').Strategy;
 const User = require('./models/user');
@@ -16,7 +17,9 @@ module.exports = (app, passport) => {
         id: +profile.id,
         name: profile.displayName,
         email: profile.emails[0].value,
-        wca_id: profile.wca.id,
+        wcaId: profile.wca.id,
+        delegateStatus: profile.wca.delegate_status,
+        accessToken: accessToken,
       }, {
         upsert: true,
       }, (err, user) => done(err, user));
@@ -55,8 +58,9 @@ module.exports = (app, passport) => {
     res.redirect('/');
   });
 
+  const userMask = _.partial(_.pick,  _, ['id', 'name', 'email', 'delegateStatus', 'wcaId']);
   app.get('/api/me', auth, (req, res) => {
-    res.json(req.user);
+    res.json(userMask(req.user));
   });
 
   return router;

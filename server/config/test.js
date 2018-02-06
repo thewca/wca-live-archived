@@ -3,6 +3,7 @@ const staging = 'https://staging.worldcubeassociation.org';
 
 module.exports = {
   port: port,
+  domain: staging,
   auth: {
     secret: 'wca-live-secret',
     wca: {

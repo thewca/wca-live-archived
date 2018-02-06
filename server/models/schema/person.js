@@ -4,7 +4,6 @@ const { Events } = require('../../lib/wca');
 module.exports = new mongoose.Schema({
   id: {
     type: Number,
-    required: true
   },
   name: {
     type: String,
@@ -14,10 +13,16 @@ module.exports = new mongoose.Schema({
     type: String
   },
   countryIso2: {
-    type: String
-  },
-  registration: [{
     type: String,
-    enum: Events.map((event) => event.id)
-  }]
+    required: true
+  },
+  delegatesCompetition: Boolean,
+  organizesCompetition: Boolean,
+  registration: {
+    status: String,
+    eventIds: [{
+      type: String,
+      enum: Events.map((event) => event.id)
+    }]
+  }
 });

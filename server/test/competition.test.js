@@ -27,4 +27,30 @@ describe('Competitions', () => {
           throw err;
         }));
   });
+
+  describe('/GET competitions/:competitionId', () => {
+    it('Should throw error on GET undefined competition', () =>
+      chai.request(app)
+        .get('/api/competitions/foo')
+        .then(() => {
+          throw 'Should not be ran';
+        }).catch((err) => {
+          err.should.have.status(404);
+          err.response.body.should.have.property('message');
+          err.response.body.message.should.eql('Competition \'foo\' not found');
+        }));
+  });
+
+  describe('/POST competitions/AtomicCubingFall2017', () => {
+    it('Should fail import from authentication', () =>
+      chai.request(app)
+        .post('/api/competitions/AtomicCubingFall2017')
+        .then(() => {
+          throw 'Should not be ran';
+        }).catch((err) => {
+          err.should.have.status(401);
+          err.response.body.should.have.property('message');
+          err.response.body.message.should.eql('Unauthorized');
+        }));
+  });
 });

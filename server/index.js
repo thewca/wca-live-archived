@@ -52,7 +52,7 @@ app.use('/auth/wca', require('./auth')(app, passport));
 
 /* Routes */
 
-app.use('/api', require('./api'));
+app.use(require('./routes'));
 
 app.use('/*', () => {
   throw new NotFound();
