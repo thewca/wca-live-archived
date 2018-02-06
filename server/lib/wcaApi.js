@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const qs = require('qs');
 const config = require('config');
 const { APIError } = require('rest-api-errors');
 
@@ -24,6 +25,17 @@ const wcaFetch = module.exports.wcaFetch = function (url, accessToken) {
       } else {
         throw new WcaApiError(data.status, data.statusText);
       }
+    });
+};
+
+module.exports.getCompetitionsManagedByMe = function (accessToken, start) {
+  console.log(32, start)
+  return wcaFetch('/competitions?' + qs.stringify({
+    managed_by_me: true,
+    start
+  }), accessToken)
+    .catch((err) => {
+      throw err;
     });
 };
 
