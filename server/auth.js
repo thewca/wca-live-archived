@@ -64,12 +64,17 @@ module.exports = (app, passport) => {
     res.json(userMask(req.user));
   });
 
-  const competitionMask = _.partialRight(_.pick, ['id', 'name', 'city', 'country_iso2', 'start_date', 'end_date']);
   app.get('/api/me/competitions', auth, (req, res, next) => {
     let now = (new Date()).toISOString().slice(0, 10); // returns yyyy-mm-dd
     getCompetitionsManagedByMe(req.user.accessToken, now)
       .then((competitions) => {
-        res.json(_.map(competitions, competitionMask));
+        res.json(_.map(competitions, (competition) => ({
+          id: competition.id,
+          name: competition.name,
+          countryIso2: competition.country_iso2,
+          startDate: competition.start_date,
+          endDate: competition.end_date,
+        })));
       })
       .catch(next);
   });

@@ -29,7 +29,6 @@ const wcaFetch = module.exports.wcaFetch = function (url, accessToken) {
 };
 
 module.exports.getCompetitionsManagedByMe = function (accessToken, start) {
-  console.log(32, start)
   return wcaFetch('/competitions?' + qs.stringify({
     managed_by_me: true,
     start
