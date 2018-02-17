@@ -2,6 +2,7 @@ const express = require('express');
 const config = require('config');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
@@ -51,6 +52,11 @@ app.use(passport.session());
 app.use('/auth/wca', require('./auth')(app, passport));
 
 /* Routes */
+
+app.use(cors({
+  origin: 'http://localhost:4200',
+  credentials: true
+}));
 
 app.use(require('./routes'));
 
