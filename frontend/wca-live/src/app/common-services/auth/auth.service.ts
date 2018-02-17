@@ -14,10 +14,14 @@ export class AuthService {
   ) { }
 
   public login() {
-    window.open(`${Settings.apiBaseUrl}/login`);
+    const url = `${Settings.apiBaseUrl}/auth/wca/login?redirect=${window.location.href}`;
+    window.location.href = url;
   }
 
-  public logout() {}
+  public logout() {
+    const url = `${Settings.apiBaseUrl}/auth/wca/logout`;
+    this.http.get(url);
+  }
 
   public getMyCompetitions(): Observable<Competition[]> {
     return this.http.get<CompetitionDto[]>(`${Settings.apiBaseUrl}/api/me/competitions`).pipe(

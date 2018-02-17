@@ -14,7 +14,7 @@ export class CompetitionService {
   ) { }
 
   public getCompetitions(): Observable<Competition[]> {
-    const url = `${Settings.apiBaseUrl}/competitions`;
+    const url = `${Settings.apiBaseUrl}/api/competitions`;
     return this.http.get<CompetitionDto[]>(url).pipe(
       map(dtos => dtos.map(dto => Competition.fromDto(dto)))
     );
