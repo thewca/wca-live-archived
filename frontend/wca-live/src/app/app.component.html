@@ -1,6 +1,7 @@
-<mat-toolbar role="header">
-  <button mat-button (click)="login()" color="primary" *ngIf="!isLoggedIn">Login</button>
-  <button mat-button color="primary" *ngIf="isLoggedIn">{{ user?.name }}</button>
+<mat-toolbar role="header" color="primary">
+  <span class="spacer"></span>
+  <button mat-raised-button (click)="login()" color="accent" *ngIf="!isLoggedIn">Login</button>
+  <button mat-raised-button color="accent" *ngIf="isLoggedIn">{{ user?.name }}</button>
 </mat-toolbar>
 
 <router-outlet></router-outlet>
