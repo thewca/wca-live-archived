@@ -1,5 +1,6 @@
 <mat-toolbar role="header">
-  <button mat-button (click)="login()" color="primary">Login</button>
+  <button mat-button (click)="login()" color="primary" *ngIf="!isLoggedIn">Login</button>
+  <button mat-button color="primary" *ngIf="isLoggedIn">{{ user?.name }}</button>
 </mat-toolbar>
 
 <router-outlet></router-outlet>
