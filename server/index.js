@@ -14,6 +14,13 @@ mongoose.Promise = Promise;
 app.set('config', config);
 app.set('dev', process.env.NODE_ENV === 'dev');
 
+/* CORS */
+
+app.use(cors({
+  origin: 'http://localhost:4200',
+  credentials: true
+}));
+
 /* Logging */
 
 app.use(morgan('dev', {
@@ -52,11 +59,6 @@ app.use(passport.session());
 app.use('/auth/wca', require('./auth')(app, passport));
 
 /* Routes */
-
-app.use(cors({
-  origin: 'http://localhost:4200',
-  credentials: true
-}));
 
 app.use(require('./routes'));
 
