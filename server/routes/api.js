@@ -9,7 +9,7 @@ const { getCompetitionWCIF } = require('../lib/wcaApi');
 /* Competitions */
 
 router.get('/competitions', (req, res, next) => {
-  Competition.find({}).select(['name', 'id']).exec()
+  Competition.find({}).select(['name', 'id', 'schedule']).exec()
     .then((c) => res.json(c))
     .catch(next);
 });
