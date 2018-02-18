@@ -1,5 +1,9 @@
 <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 
+<div *ngFor="let comp of competitions">
+  {{ comp | json }}
+</div>
+
 <p *ngIf="competitions.length === 0">
   No competitions found
 </p>

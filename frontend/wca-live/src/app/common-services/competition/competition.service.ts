@@ -20,4 +20,14 @@ export class CompetitionService {
     );
   }
 
+  public importCompetition(comp: Competition): Observable<boolean> {
+    const url = `${Settings.apiBaseUrl}/api/competitions/${comp.id}`;
+    return this.http.post<any>(url, null, {
+      withCredentials: true,
+      observe: 'response'
+    }).pipe(
+      map(response => response.status === 200)
+    );
+  }
+
 }

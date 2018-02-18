@@ -16,7 +16,7 @@ export class Competition extends Model {
     model.name = dto.name;
     model.startDate = moment(dto.startDate);
     model.endDate = moment(dto.endDate);
-    model.events = dto.events.map(e => Event.fromDto(e));
+    model.events = dto.events ? dto.events.map(e => Event.fromDto(e)) : [];
     return model;
   }
 
