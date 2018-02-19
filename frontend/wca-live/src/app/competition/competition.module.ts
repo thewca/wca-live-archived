@@ -6,6 +6,9 @@ import { CompetitionListComponent } from './competition-list/competition-list.co
 import { CommonUiModule } from '../common-ui/common-ui.module';
 import { CommonServicesModule } from '../common-services/common-services.module';
 import { ImporterComponent } from './importer/importer.component';
+import { DetailComponent } from './detail/detail.component';
+import { EventsComponent } from './events/events.component';
+import { CompetitorsComponent } from './competitors/competitors.component';
 
 @NgModule({
   imports: [
@@ -15,7 +18,10 @@ import { ImporterComponent } from './importer/importer.component';
     CommonUiModule
   ],
   declarations: [CompetitionListComponent,
-    ImporterComponent
+    ImporterComponent,
+    DetailComponent,
+    EventsComponent,
+    CompetitorsComponent
 ]
 })
 export class CompetitionModule { }

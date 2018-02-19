@@ -1,8 +1,18 @@
 <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 
-<div *ngFor="let comp of competitions">
-  {{ comp | json }}
-</div>
+<mat-list>
+  <mat-list-item
+      *ngFor="let comp of competitions"
+      routerLink="/competition/{{comp.id}}"
+      class="clickable"
+  >
+    <h3 matLine>{{comp.name}}</h3>
+    <p matLine>
+      {{comp.startDate.format('LL')}} - {{comp.endDate.format('LL')}}
+    </p>
+  </mat-list-item>
+</mat-list>
+
 
 <p *ngIf="competitions.length === 0">
   No competitions found
