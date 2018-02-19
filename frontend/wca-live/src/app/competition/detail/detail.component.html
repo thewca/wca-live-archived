@@ -1,0 +1,13 @@
+<nav mat-tab-nav-bar *ngIf="competition">
+  <a mat-tab-link
+      [routerLink]="['events']"
+      routerLinkActive #rlae="routerLinkActive"
+      [active]="rlae.isActive"
+  >Events</a>
+  <a mat-tab-link
+      [routerLink]="['competitors']"
+      routerLinkActive #rlac="routerLinkActive"
+      [active]="rlac.isActive"
+  >Competitors</a>
+</nav>
+<router-outlet></router-outlet>

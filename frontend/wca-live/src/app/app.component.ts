@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './common-services/auth/auth.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'wca-root',
@@ -17,10 +18,12 @@ export class AppComponent implements OnInit {
   }
 
   constructor(
-    private auth: AuthService
+    private auth: AuthService,
+    public title: Title
   ) {}
 
   public ngOnInit() {
+    this.title.setTitle('WCA Live');
     this.auth.checkLoginStatus();
   }
 

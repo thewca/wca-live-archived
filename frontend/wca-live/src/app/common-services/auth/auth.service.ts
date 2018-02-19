@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators/map';
 import { Competition } from '../../../model/competition.model';
 import { PersonDto } from '../../../model/dto/person.dto';
 import { Person } from '../../../model/person.model';
+import { sortByProp } from '../../../operators/sortByProp';
 
 @Injectable()
 export class AuthService {
@@ -51,7 +52,13 @@ export class AuthService {
   }
 
   public getMyCompetitions(): Observable<Competition[]> {
-    return this.http.get<CompetitionDto[]>(`${Settings.apiBaseUrl}/api/me/competitions`).pipe(
+    return this.http.get<CompetitionDto[]>(
+      `${Settings.apiBaseUrl}/api/me/competitions`,
+      {
+        withCredentials: true
+      }
+    ).pipe(
+      sortByProp('startDate'),
       map(dtos => dtos.map(dto => Competition.fromDto(dto)))
     );
   }
