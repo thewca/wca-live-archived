@@ -264,12 +264,14 @@ components:
           $ref: '#/components/schemas/competitionId'
         name:
           type: string
-        startDate:
-          type: string
-          format: date
-        endDate:
-          type: string
-          format: date
+        schedule:
+          type: object
+          properties:
+            startDate:
+              type: string
+              format: date
+            numberOfDays:
+              type: number
         events:
           description: List of events being held by ID
           type: array
