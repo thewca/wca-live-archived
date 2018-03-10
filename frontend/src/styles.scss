@@ -1,0 +1,6 @@
+@import '~@angular/material/theming';
+@import 'vars.scss';
+
+@include mat-core();
+
+@include angular-material-theme($wca-live-theme);

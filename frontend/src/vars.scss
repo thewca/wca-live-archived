@@ -1,0 +1,6 @@
+@import '~@angular/material/theming';
+
+$wca-live-primary:  mat-palette($mat-blue);
+$wca-live-accent:   mat-palette($mat-indigo);
+$wca-live-warn:     mat-palette($mat-red);
+$wca-live-theme:    mat-light-theme($wca-live-primary, $wca-live-accent, $wca-live-warn);
