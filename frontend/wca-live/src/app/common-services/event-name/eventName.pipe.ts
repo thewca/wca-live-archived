@@ -17,6 +17,7 @@ export class EventNamePipe implements PipeTransform {
       case '444bf': return '4x4x4 Blindfolded';
       case '555bf': return '5x5x5 Blindfolded';
       case '333mb': return '3x3x3 Multi-Blind';
+      case '333mbf': return '3x3x3 Multi-Blind';
       case '333oh': return '3x3x3 One-Handed';
       case '333ft': return '3x3x3 With Feet';
       case '333fm': return '3x3x3 Fewest Moves';

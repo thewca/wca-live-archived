@@ -1,7 +1,7 @@
 <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 <mat-list *ngIf="competition">
   <mat-list-item *ngFor="let event of competition.events">
-    <h3 matLine>{{ event.id | eventName }}</h3>
+    <h3 matLine class="cubing-icon event-{{event.id}}"> {{ event.id | eventName }}</h3>
   </mat-list-item>
 </mat-list>
 <p>
