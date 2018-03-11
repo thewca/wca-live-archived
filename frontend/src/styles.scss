@@ -4,3 +4,10 @@
 @include mat-core();
 
 @include angular-material-theme($wca-live-theme);
+
+
+.full-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}

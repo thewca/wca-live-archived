@@ -1,0 +1,8 @@
+<div class="full-container">
+  <input type="text" (keydown)="handleKey($event.key)" #input />
+  <div
+    class="display"
+    [style.font-size]="displayFontSize"
+    [style.line-height]="displayLineHeight"
+  >{{formattedValue}}</div>
+</div>
