@@ -1,8 +1,11 @@
-<div class="full-container">
+<div class="full-container" *ngIf="mode === 'time' || mode === 'moves'">
   <input type="text" (keydown)="handleKey($event.key)" #input />
   <div
     class="display"
     [style.font-size]="displayFontSize"
     [style.line-height]="displayLineHeight"
   >{{formattedValue}}</div>
+</div>
+<div class="full-container" *ngIf="mode === 'puzzles'">
+  <wca-multi-attempt-input></wca-multi-attempt-input>
 </div>
