@@ -32,8 +32,8 @@ describe('Competitions', () => {
     it('Should throw error on GET undefined competition', () =>
       chai.request(app)
         .get('/api/competitions/foo')
-        .then(() => {
-          throw 'Should not be ran';
+        .then((res) => {
+          res.should.have.status(404);
         }).catch((err) => {
           err.should.have.status(404);
           err.response.body.should.have.property('message');
@@ -45,8 +45,8 @@ describe('Competitions', () => {
     it('Should fail import from authentication', () =>
       chai.request(app)
         .post('/api/competitions/AtomicCubingFall2017')
-        .then(() => {
-          throw 'Should not be ran';
+        .then((res) => {
+          res.should.have.status(401);
         }).catch((err) => {
           err.should.have.status(401);
           err.response.body.should.have.property('message');
