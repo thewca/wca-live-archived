@@ -1,14 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from './app-routing.module';
-
-import { ServiceWorkerModule } from '@angular/service-worker';
 import { AppComponent } from './app.component';
-
-import { environment } from '../environments/environment';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonUiModule } from './common-ui/common-ui.module';
-import { CommonServicesModule } from './common-services/common-services.module';
 
 @NgModule({
   declarations: [
@@ -17,9 +13,9 @@ import { CommonServicesModule } from './common-services/common-services.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
-    CommonUiModule,
-    CommonServicesModule
+    BrowserAnimationsModule,
+    FlexLayoutModule,
+    CommonUiModule
   ],
   providers: [],
   bootstrap: [AppComponent]

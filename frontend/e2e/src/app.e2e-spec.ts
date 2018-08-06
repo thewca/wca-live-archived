@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('wca-live App', () => {
+describe('workspace-project App', () => {
   let page: AppPage;
 
   beforeEach(() => {
@@ -9,6 +9,6 @@ describe('wca-live App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to wca!');
+    expect(page.getParagraphText()).toEqual('Welcome to frontend!');
   });
 });

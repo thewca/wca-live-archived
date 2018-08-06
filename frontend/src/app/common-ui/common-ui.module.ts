@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AttemptInputComponent } from './attempt-input/attempt-input.component';
-import { FormsModule } from '@angular/forms';
-import { MultiAttemptInputComponent } from './multi-attempt-input/multi-attempt-input.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule
+    MatToolbarModule
   ],
-  declarations: [AttemptInputComponent, MultiAttemptInputComponent],
-  exports: [AttemptInputComponent]
+  exports: [
+    MatToolbarModule
+  ],
+  declarations: []
 })
 export class CommonUiModule { }
