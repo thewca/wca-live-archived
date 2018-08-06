@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonUiModule } from './common-ui/common-ui.module';
+import { CommonServicesModule } from './common-services/common-services.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { CommonUiModule } from './common-ui/common-ui.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    CommonUiModule
+    CommonUiModule,
+    CommonServicesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
