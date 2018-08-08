@@ -56,7 +56,8 @@ module.exports = (app, passport) => {
 
   router.get('/logout', (req, res) => {
     req.logout();
-    res.redirect('/');
+    let redirect = req.query.redirect || '/';
+    res.redirect(redirect);
   });
 
   const userMask = _.partial(_.pick,  _, ['id', 'name', 'email', 'delegateStatus', 'wcaId']);
