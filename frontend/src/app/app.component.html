@@ -1,5 +1,8 @@
 <mat-toolbar color="primary">
   <span>WCA Live</span>
+  <span fxFlex="1 1 auto"></span>
+  <button mat-raised-button (click)="logout()" *ngIf="isLoggedIn">Logout</button>
+  <button mat-raised-button (click)="login()" *ngIf="!isLoggedIn">Login</button>
 </mat-toolbar>
 
 <router-outlet></router-outlet>

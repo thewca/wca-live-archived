@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=dev nodemon ./",
+    "dev-win": "set NODE_ENV=dev&& nodemon ./",
     "lint": "eslint .",
     "test": "mocha --exit"
   },
