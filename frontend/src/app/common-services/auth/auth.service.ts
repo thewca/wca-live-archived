@@ -13,11 +13,11 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   public login() {
-    window.location.href = `${Constants.API_URL}auth/wca/login?redirect=${encodeURI('http://localhost:4200/')}`;
+    window.location.href = `${Constants.API_URL}auth/wca/login?redirect=${encodeURI(Constants.APP_URL)}`;
   }
 
   public logout() {
-    window.location.href = `${Constants.API_URL}auth/wca/logout`;
+    window.location.href = `${Constants.API_URL}auth/wca/logout?redirect=${encodeURI(Constants.APP_URL)}`;
   }
 
   public me() {
