@@ -21,11 +21,11 @@ export class AuthService {
   }
 
   public me() {
-    return this.http.get(`${Constants.API_URL}api/me`);
+    return this.http.get(`${Constants.API_URL}api/me`, { withCredentials: true });
   }
 
   public isLoggedIn(): Observable<boolean> {
-    return this.http.get(`${Constants.API_URL}api/me`).pipe(
+    return this.http.get(`${Constants.API_URL}api/me`, { withCredentials: true }).pipe(
       map((resp: any) => resp.id > 0),
       catchError(_ => obsOf(false))
     );
