@@ -1,0 +1,13 @@
+<table>
+  <tr *ngFor="let competition of competitions">
+    <td>
+      <a [routerLink]="[baseHref, competition.id]">
+        {{ competition.name }}
+      </a>
+    </td>
+    <td>
+      {{ competition.startDate.format('LL') }}
+      <span *ngIf="competition.endDate.diff(competition.startDate) !== 0"> - {{ competition.endDate.format('LL') }}</span>
+    </td>
+  </tr>
+</table>

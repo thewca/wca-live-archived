@@ -1,0 +1,3 @@
+<div *ngIf="(competitions$ | async) as competitions">
+  <wca-competition-list [competitions]="competitions" baseHref="/public/competition"></wca-competition-list>
+</div>

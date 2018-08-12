@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from './auth/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { CompetitionService } from './competition/competition.service';
 
 @NgModule({
   imports: [
@@ -9,7 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   providers: [
-    AuthService
+    AuthService,
+    CompetitionService
   ],
   exports: [
     HttpClientModule
