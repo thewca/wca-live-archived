@@ -3,6 +3,9 @@ import { CompetitionService } from '../../common-services/competition/competitio
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { RoundName } from '../../models/roundName.class';
+import { Event } from '../../models/event.model';
+import { Round } from '../../models/round.model';
 
 @Component({
   selector: 'wca-competition',
@@ -20,6 +23,20 @@ export class CompetitionComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  public roundName(roundId: string, numRounds: number): string {
+    let [ev, r] = roundId.split('-r');
+    let round = parseInt(r, 10);
+    return RoundName.getRoundName(round, numRounds);
+  }
+
+  public eventTracker(_ix: number, event: Event): string {
+    return event.id.toString();
+  }
+
+  public roundTracker(_ix: number, round: Round): string {
+    return round.id;
   }
 
 }

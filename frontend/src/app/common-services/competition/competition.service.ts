@@ -19,7 +19,9 @@ export class CompetitionService {
     );
   }
 
-  public getForId(id: string) {
-    return this.http.get(`${Constants.API_URL}api/competitions/${id}`);
+  public getForId(id: string): Observable<Competition> {
+    return this.http.get<CompetitionDto>(`${Constants.API_URL}api/competitions/${id}`).pipe(
+      map(dto => Competition.fromDto(dto))
+    );
   }
 }

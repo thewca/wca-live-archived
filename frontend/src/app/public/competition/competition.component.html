@@ -1,3 +1,11 @@
-<p>
-  {{ competition$ | async | json }}
-</p>
+<div *ngIf="(competition$ | async) as competition">
+  <h2>{{ competition.name }}</h2>
+  <mat-accordion displayMode="flat">
+    <mat-expansion-panel *ngFor="let event of competition.events; trackBy: eventTracker">
+      <mat-expansion-panel-header>
+        <mat-panel-title><h4>{{ event.id }}</h4></mat-panel-title>
+      </mat-expansion-panel-header>
+      <p *ngFor="let round of event.rounds; trackBy: roundTracker">{{ roundName(round.id, event.rounds.length) }}</p>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
