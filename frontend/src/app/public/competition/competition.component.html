@@ -5,7 +5,9 @@
       <mat-expansion-panel-header>
         <mat-panel-title><h4>{{ event.id }}</h4></mat-panel-title>
       </mat-expansion-panel-header>
-      <p *ngFor="let round of event.rounds; trackBy: roundTracker">{{ roundName(round.id, event.rounds.length) }}</p>
+      <p *ngFor="let round of event.rounds; trackBy: roundTracker">
+        <a [routerLink]="['results', round.id]">{{ roundName(round.id, event.rounds.length) }}</a>
+      </p>
     </mat-expansion-panel>
   </mat-accordion>
 </div>

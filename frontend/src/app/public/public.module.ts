@@ -6,6 +6,7 @@ import { CompetitionsComponent } from './competitions/competitions.component';
 import { CommonServicesModule } from '../common-services/common-services.module';
 import { CommonUiModule } from '../common-ui/common-ui.module';
 import { CompetitionComponent } from './competition/competition.component';
+import { ResultsComponent } from './results/results.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,7 @@ import { CompetitionComponent } from './competition/competition.component';
     CommonUiModule,
     PublicRoutingModule
   ],
-  declarations: [CompetitionsComponent, CompetitionComponent],
+  declarations: [CompetitionsComponent, CompetitionComponent, ResultsComponent],
   entryComponents: [CompetitionsComponent]
 })
 export class PublicModule { }

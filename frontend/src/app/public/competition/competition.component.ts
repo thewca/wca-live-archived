@@ -6,6 +6,7 @@ import { switchMap } from 'rxjs/operators';
 import { RoundName } from '../../models/roundName.class';
 import { Event } from '../../models/event.model';
 import { Round } from '../../models/round.model';
+import { Competition } from '../../models/competition.model';
 
 @Component({
   selector: 'wca-competition',
@@ -14,7 +15,7 @@ import { Round } from '../../models/round.model';
 })
 export class CompetitionComponent implements OnInit {
 
-  public competition$: Observable<any>;
+  public competition$: Observable<Competition>;
 
   constructor(private competitionService: CompetitionService, private route: ActivatedRoute) {
     this.competition$ = this.route.paramMap.pipe(

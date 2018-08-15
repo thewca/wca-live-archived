@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/public'
+    redirectTo: '/public/competitions'
   }
 ];
 
