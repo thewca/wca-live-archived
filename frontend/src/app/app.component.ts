@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './common-services/auth/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'wca-root',
@@ -9,9 +10,11 @@ import { AuthService } from './common-services/auth/auth.service';
 export class AppComponent {
 
   public isLoggedIn: boolean = false;
+  public myWcaId: string;
 
   public constructor(private auth: AuthService) {
     this.auth.isLoggedIn().subscribe(loggedIn => this.isLoggedIn = loggedIn);
+    this.auth.me().subscribe((me: any) => this.myWcaId = me.wcaId);
   }
 
   public login() {

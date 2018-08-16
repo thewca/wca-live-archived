@@ -19,6 +19,10 @@ export class CompetitionService {
     );
   }
 
+  public getMy(): Observable<Competition[]> {
+    return this.http.get<Competition[]>(`${Constants.API_URL}api/me/competitions`, { withCredentials: true });
+  }
+
   public getForId(id: string): Observable<Competition> {
     return this.http.get<CompetitionDto>(`${Constants.API_URL}api/competitions/${id}`).pipe(
       map(dto => Competition.fromDto(dto))

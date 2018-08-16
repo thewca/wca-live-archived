@@ -1,8 +1,16 @@
 <mat-toolbar color="primary">
   <span class="logo"><a routerLink="/">WCA Live</a></span>
   <span fxFlex="1 1 auto"></span>
-  <button mat-raised-button (click)="logout()" *ngIf="isLoggedIn">Logout</button>
+  <button mat-raised-button *ngIf="isLoggedIn" [matMenuTriggerFor]="userMenu">
+    {{ myWcaId }}
+    <mat-icon>arrow_drop_down</mat-icon>
+  </button>
   <button mat-raised-button (click)="login()" *ngIf="!isLoggedIn">Login</button>
+
+  <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
+    <a mat-menu-item routerLink="/admin/competitions">My Competitions</a>
+    <button mat-menu-item (click)="logout()">Logout</button>
+  </mat-menu>
 </mat-toolbar>
 
 <router-outlet></router-outlet>
