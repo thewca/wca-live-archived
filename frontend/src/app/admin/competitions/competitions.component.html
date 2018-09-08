@@ -1,3 +1,16 @@
 <div *ngIf="(competitions$ | async) as competitions">
-  {{ competitions | json }}
+  <h1>Your upcoming competitions:</h1>
+  <table>
+    <thead>
+      <tr><th>Name</th><th>Startdate</th><th>Enddate</th><th></th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let competition of competitions">
+        <td>{{competition.name}}</td>
+        <td>{{competition.startDate.format('LL')}}</td>
+        <td><span *ngIf="competition.endDate.diff(competition.startDate) !== 0">{{ competition.endDate.format('LL') }}</span></td>
+        <td><button mat-raised-button color="accent" (click)="import(competition)" [disabled]="loading.indexOf(competition.id) > -1">Import</button></td>
+      </tr>
+    </tbody>
+  </table>
 </div>

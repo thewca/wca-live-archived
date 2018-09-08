@@ -75,7 +75,21 @@ module.exports = (app, passport) => {
           countryIso2: competition.country_iso2,
           startDate: competition.start_date,
           endDate: competition.end_date,
-        })));
+        })).sort((a, b) => {
+          if (a.startDate < b.startDate) {
+            return -1;
+          }
+          if (a.startDate > b.startDate) {
+            return 1;
+          }
+          if (a.endDate < b.endDate) {
+            return -1;
+          }
+          if (a.endDate > b.endDate) {
+            return 1;
+          }
+          return 0;
+        }));
       })
       .catch(next);
   });

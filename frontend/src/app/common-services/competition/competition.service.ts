@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Competition } from '../../models/competition.model';
 import { CompetitionDto } from '../../models/dto/competition.dto';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,19 @@ export class CompetitionService {
   }
 
   public getMy(): Observable<Competition[]> {
-    return this.http.get<Competition[]>(`${Constants.API_URL}api/me/competitions`, { withCredentials: true });
+    return this.http.get<Competition[]>(`${Constants.API_URL}api/me/competitions`, { withCredentials: true }).pipe(
+      map(comps => comps.map(comp => {
+        comp.startDate = moment.utc(comp.startDate, 'YYYY-MM-DD');
+        comp.endDate = moment.utc(comp.endDate, 'YYYY-MM-DD');
+        return comp
+      }))
+    );
+  }
+
+  public import(competitionId: string): Observable<Competition> {
+    return this.http.post<CompetitionDto>(`${Constants.API_URL}api/competitions/${competitionId}`, null, { withCredentials: true }).pipe(
+      map(dto => dto === null ? null : Competition.fromDto(dto))
+    );
   }
 
   public getForId(id: string): Observable<Competition> {
