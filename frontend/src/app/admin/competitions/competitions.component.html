@@ -9,7 +9,13 @@
         <td>{{competition.name}}</td>
         <td>{{competition.startDate.format('LL')}}</td>
         <td><span *ngIf="competition.endDate.diff(competition.startDate) !== 0">{{ competition.endDate.format('LL') }}</span></td>
-        <td><button mat-raised-button color="accent" (click)="import(competition)" [disabled]="loading.indexOf(competition.id) > -1">Import</button></td>
+        <td>
+          <button mat-raised-button color="accent" (click)="import(competition)" [disabled]="loading.indexOf(competition.id) > -1">
+            {{ this.imported.indexOf(competition.id) > -1 ? 'Update' : 'Import' }}
+          </button>
+          &nbsp;
+          <a mat-raised-button color="accent" *ngIf="imported.indexOf(competition.id) > -1" [routerLink]="['/admin/competitions', competition.id]">Enter Results</a>
+        </td>
       </tr>
     </tbody>
   </table>

@@ -3,6 +3,7 @@ import { CompetitionService } from '../../common-services/competition/competitio
 import { Observable } from 'rxjs';
 import { Competition } from '../../models/competition.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'wca-competitions',
@@ -13,12 +14,17 @@ export class CompetitionsComponent implements OnInit {
 
   public competitions$: Observable<Competition[]>;
   public loading: string[] = [];
+  public imported: string[] = [];
 
   constructor(
     private competitionService: CompetitionService,
     private snackbar: MatSnackBar
   ) {
-    this.competitions$ = this.competitionService.getMy();
+    this.competitions$ = this.competitionService.getMy().pipe(
+      tap(comps => comps.map(comp => {
+        this.competitionService.getForId(comp.id).subscribe(c => this.imported.push(comp.id), e => true);
+      }))
+    );
   }
 
   ngOnInit() {
@@ -29,6 +35,7 @@ export class CompetitionsComponent implements OnInit {
     this.competitionService.import(competition.id).subscribe((comp) => {
       if (comp === null) {
         this.showMessage('Competition successfully imported');
+        this.imported.push(competition.id);
       } else {
         this.showMessage('Competition successfully updated');
       }
