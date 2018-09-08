@@ -14,7 +14,7 @@
             {{ this.imported.indexOf(competition.id) > -1 ? 'Update' : 'Import' }}
           </button>
           &nbsp;
-          <a mat-raised-button color="accent" *ngIf="imported.indexOf(competition.id) > -1" [routerLink]="['/admin/competition', competition.id]">Enter Results</a>
+          <a mat-raised-button color="accent" *ngIf="imported.indexOf(competition.id) > -1 && isNow(competition)" [routerLink]="['/admin/competition', competition.id]">Enter Results</a>
         </td>
       </tr>
     </tbody>

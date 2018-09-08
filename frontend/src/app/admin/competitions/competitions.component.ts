@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Competition } from '../../models/competition.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { tap } from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Component({
   selector: 'wca-competitions',
@@ -42,6 +43,10 @@ export class CompetitionsComponent implements OnInit {
       let i = this.loading.indexOf(competition.id);
       this.loading.splice(i, 1);
     });
+  }
+
+  public isNow(competition: Competition): boolean {
+    return moment().isBetween(competition.startDate, competition.endDate, 'day', '[]');
   }
 
   private showMessage(msg: string) {
