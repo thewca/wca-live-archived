@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CompetitionComponent } from './competition/competition.component'
 import { MatExpansionModule } from '@angular/material/expansion';
+import { ResultsComponent } from './results/results.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatExpansionModule,
     MatSnackBarModule
   ],
-  declarations: [CompetitionsComponent, CompetitionComponent]
+  declarations: [CompetitionsComponent, CompetitionComponent, ResultsComponent]
 })
 export class AdminModule { }
