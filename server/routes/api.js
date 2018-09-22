@@ -46,4 +46,10 @@ router.get('/competitions/:competitionId/results/:eventId-r:roundNumber', getCom
   res.json(req.round.results);
 });
 
+router.put('/competitions/:competitionId/results/:eventId-r:roundNumber', auth, getCompetition, parseActivityCode, getRound, (req, res, next) => {
+    let round = req.round;
+    round.results = req.body;
+    Round.findOneAndUpdate({ _id: round._id }, round).then(r => res.json(r)).catch(next);
+});
+
 module.exports = router;

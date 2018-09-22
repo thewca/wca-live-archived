@@ -92,7 +92,7 @@ module.exports = (app, passport) => {
         }));
       })
       .catch(next);
-  });
+  }); 
 
   return router;
 };
