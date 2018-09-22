@@ -1,11 +1,5 @@
 const mongoose = require('mongoose');
-
-const SolveTime = new mongoose.Schema({
-  centiseconds: {
-    type: Number,
-    min: 0
-  }
-});
+const SolveTime = require('./solveTime');
 
 module.exports = new mongoose.Schema({
   personId: {
@@ -14,6 +8,9 @@ module.exports = new mongoose.Schema({
   position: {
     type: Number,
     min: 0
+  },
+  solves: {
+    type: [SolveTime],
   },
   average: {
     type: SolveTime

@@ -66,8 +66,8 @@ module.exports = (app, passport) => {
   });
 
   app.get('/api/me/competitions', auth, (req, res, next) => {
-    let now = (new Date(Date.now() - 7 * 86400000)).toISOString().slice(0, 10); // returns yyyy-mm-dd
-    getCompetitionsManagedByMe(req.user.accessToken, now)
+    let start = (new Date(Date.now() - 14 * 86400000)).toISOString().slice(0, 10); // returns yyyy-mm-dd
+    getCompetitionsManagedByMe(req.user.accessToken, start)
       .then((competitions) => {
         res.json(_.map(competitions, (competition) => ({
           id: competition.id,

@@ -1,7 +1,7 @@
 export type ValidEventId = "222" | "333" | "444" | "555" | "666" | "777" | "333ft" | "333oh" | "minx" | "pyram" | "skewb" | "sq1" | "333bf" | "333mbf" | "444bf" | "555bf" | "clock" | "333fm";
 
 export class EventId {
-  public constructor(private value: ValidEventId) {}
+  public constructor(public readonly value: ValidEventId) {}
 
   public toString(): string {
     switch (this.value) {
