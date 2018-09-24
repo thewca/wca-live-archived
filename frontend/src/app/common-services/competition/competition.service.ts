@@ -15,7 +15,7 @@ export class CompetitionService {
   constructor(private http: HttpClient) { }
 
   public getList(): Observable<Competition[]> {
-    return this.http.get<CompetitionDto[]>(`${Constants.API_URL}api/competitions`).pipe(
+    return this.http.get<CompetitionDto[]>(`${Constants.API_URL}competition`).pipe(
       map(dtos => dtos.map(dto => Competition.fromDto(dto)))
     );
   }

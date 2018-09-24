@@ -15,8 +15,8 @@ export class Competition {
     let m = new Competition();
     m.id = dto.id;
     m.name = dto.name;
-    m.startDate = moment.utc(dto.schedule.startDate, 'YYYY-MM-DD');
-    m.endDate = moment.utc(dto.schedule.startDate, 'YYYY-MM-DD').add(dto.schedule.numberOfDays - 1, 'd');
+    m.startDate = moment.utc(dto.startDate, 'YYYY-MM-DD');
+    m.endDate = moment.utc(dto.endDate, 'YYYY-MM-DD');
     if (dto.hasOwnProperty('events')) {
       m.events = dto.events.map(e => Event.fromDto(e));
     }

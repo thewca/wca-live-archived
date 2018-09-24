@@ -11,6 +11,11 @@ const getById = get('/competition/:id', async ctx => {
      return server.reply.status(404).send('Competition not found');
    }
    return competition;
-})
+});
 
-module.exports = [ getById ];
+const getAll = get('/competition', async ctx => {
+  let competitions = await Competition.find({}).select(['name', 'id', 'startDate', 'endDate']).exec();
+  return competitions;
+});
+
+module.exports = [ getById, getAll ];
