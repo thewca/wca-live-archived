@@ -1,46 +1,29 @@
 {
-  "name": "wca-live",
-  "version": "0.0.0",
-  "description": "REST API to serve WCA results",
+  "name": "wca-live-server",
+  "version": "1.0.0",
+  "description": "Server code for WCA Live",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=dev nodemon ./",
-    "dev-win": "set NODE_ENV=dev&& nodemon ./",
-    "lint": "eslint .",
-    "test": "mocha --exit"
+    "start": "node index.js",
+    "test": "jest --coverage --forceExit"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "config": "1.29.2",
-    "connect-mongo": "2.0.1",
-    "cors": "2.8.4",
-    "express": "4.16.2",
-    "express-session": "1.15.6",
-    "hapi": "17.5.2",
-    "lodash": "4.17.5",
-    "mongoose": "5.0.2",
-    "morgan": "1.9.0",
-    "node-fetch": "1.7.3",
-    "passport": "0.4.0",
-    "passport-wca": "1.0.3",
-    "qs": "6.5.1",
-    "rest-api-errors": "1.2.1"
+    "connect-mongo": "^2.0.1",
+    "cors": "^2.8.4",
+    "moment": "^2.22.2",
+    "mongoose": "^5.2.17",
+    "node-fetch": "^2.2.0",
+    "passport": "^0.4.0",
+    "passport-wca": "^1.0.3",
+    "server": "^1.0.18"
   },
   "devDependencies": {
-    "chai": "4.1.2",
-    "chai-http": "4.0.0",
-    "eslint": "4.15.0",
-    "eslint-plugin-mocha": "4.11.0",
-    "mocha": "5.0.0",
-    "nodemon": "1.18.3",
-    "pre-commit": "1.2.2"
+    "nodemon": "^1.18.4"
   },
   "nodemonConfig": {
     "ext": "*.js",
     "verboise": true
-  },
-  "pre-commit": [
-    "lint"
-  ]
+  }
 }

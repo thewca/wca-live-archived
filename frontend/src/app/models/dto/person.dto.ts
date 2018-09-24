@@ -7,4 +7,5 @@ export class PersonDto {
   organizesCompetition: boolean;
   registration: RegistrationDto;
   wcaId: string;
+  results?: any[];
 }

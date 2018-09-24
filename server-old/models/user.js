@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Competition = require('./competition');
 
 const schema = new mongoose.Schema({
   id: {
@@ -19,13 +20,11 @@ const schema = new mongoose.Schema({
     type: String,
     required: true
   },
-  avatar: {
-    type: String
-  },
   accessToken: {
     type: String,
     required: true
-  }
+  },
+  competitions: [Competition.schema]
 });
 
 module.exports = mongoose.model('User', schema, 'users');

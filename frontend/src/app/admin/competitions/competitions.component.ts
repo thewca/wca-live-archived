@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Competition } from '../../models/competition.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { tap } from 'rxjs/operators';
-import * as moment from 'moment';
+//import * as moment from 'moment';
 
 @Component({
   selector: 'wca-competitions',
@@ -20,15 +20,14 @@ export class CompetitionsComponent implements OnInit {
   constructor(
     private competitionService: CompetitionService,
     private snackbar: MatSnackBar
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.competitions$ = this.competitionService.getMy().pipe(
       tap(comps => comps.map(comp => {
         this.competitionService.getForId(comp.id).subscribe(c => this.imported.push(comp.id), e => true);
       }))
     );
-  }
-
-  ngOnInit() {
   }
 
   public import(competition: Competition) {
@@ -46,7 +45,8 @@ export class CompetitionsComponent implements OnInit {
   }
 
   public isNow(competition: Competition): boolean {
-    return moment().isBetween(competition.startDate, competition.endDate, 'day', '[]');
+    return true;
+    //return moment().isBetween(competition.startDate, competition.endDate, 'day', '[]');
   }
 
   private showMessage(msg: string) {

@@ -1,32 +1,30 @@
 const mongoose = require('mongoose');
-const Event = require('./schema/event');
-const Person = require('./schema/person');
+const Event = require('./event');
 
 const schema = new mongoose.Schema({
   id: {
     type: String,
-    required: true
+    required: true,
+    index: true,
+    unique: true
   },
   name: {
     type: String,
     required: true
   },
-  schedule: {
-    startDate: {
-      type: String
-    },
-    numberOfDays: {
-      type: Number
-    }
+  shortName: {
+    type: String,
+    required: false
   },
-  persons: {
-    type: [Person],
+  startDate: {
+    type: Date,
     required: true
   },
-  events: {
-    type: [Event],
-    required: true
-  }
+  endDate: {
+    type: Date,
+    require: true
+  },
+  events: [Event]
 });
 
 module.exports = mongoose.model('Competition', schema, 'competitions');
