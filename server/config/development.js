@@ -6,8 +6,8 @@ module.exports = {
   apiBaseUrl: `${wcaServer}/api/v0`,
   wca: {
     oAuth: {
-      clientID: '80179a5dc470615566d356d435658baba999e838c8060a4748f6c4cbd5d00af2',
-      clientSecret: '7895af1f9f6bbeb2cc39892db186b178d27f0138ae67db8c2ed5446fe7eb1f1f'
+      clientID: '1168e1fbe4a11055c9dca879752050a01c460133c5c3a336ddfca5afa8445774',
+      clientSecret: '6d0b6dcd3943213e37231a0867e95410e085e1e9d42f31da026b58378b838e05'
     }
   }
 };

@@ -7,6 +7,8 @@ const pluck = require('../../helpers/object.pluck');
 const moment = require('moment');
 const fetch = require('node-fetch');
 const Competition = require('../../models/competition');
+const Person = require('../../models/person');
+const Registration = require('../../models/registration');
 
 let configFile = 'config/' + process.env.NODE_ENV;
 const config = require(configFile);
@@ -89,7 +91,7 @@ const competitions = get('/auth/me/competitions', auth, async (ctx) => {
   if (ctx.user && ctx.user.accessToken) {
     headers.Authorization = `Bearer ${ctx.user.accessToken}`;
   }
-  let start = moment().add(-7, 'day');
+  let start = moment().add(-70, 'day');
   let result;
   try {
     let data = await fetch(`${config.apiBaseUrl}/competitions?managed_by_me=true&start=${start.format('YYYY-MM-DD')}`, {headers});
@@ -140,6 +142,7 @@ const importCompetition = post('/auth/competition/:id', auth, async ctx => {
       return server.reply.status(err.code).send(err.msg);
     })
   ;
+  return result;
   let competition = await Competition.findOneAndUpdate({
     id: ctx.params.id
   }, {
@@ -152,6 +155,33 @@ const importCompetition = post('/auth/competition/:id', auth, async ctx => {
   }, {
     upsert: true
   });
+  result.persons.forEach(async person => {
+    await Person.findOneAndUpdate({
+      id: person.wcaUserId
+    }, {
+      id: person.wcaUserId,
+      wcaId: person.wcaId,
+      thumbnailUrl: person.avatar.thumbUrl,
+      avatarUrl: person.avatar.url,
+      dateOfBirth: moment(person.birthdate, 'YYYY-MM-DD').toDate(),
+      country: person.countryIso2,
+      gender: person.gender,
+      name: person.name,
+      personalBests: person.personalBests || []
+    }, { upsert: true });
+
+    if (person.registration && person.registration.status === 'accepted') {
+      await Registration.findOneAndUpdate({
+        competitionId: ctx.params.id,
+        competitorId: person.wcaUserId
+      }, {
+        competitionId: ctx.params.id,
+        competitorId: person.wcaUserId,
+        registrantId: person.registrantId,
+        events: person.registration.eventIds
+      }, { upsert: true });
+    }
+  });
   result.events.forEach(event => {
     event.rounds.forEach(round => {
       round.roundResults.forEach(result => {
@@ -159,7 +189,11 @@ const importCompetition = post('/auth/competition/:id', auth, async ctx => {
       });
     });
   });
-  return competition;
+  if (competition) {
+    return competition;
+  } else {
+    return await Competition.findOne({ id: ctx.params.id });
+  }
 });
 
 module.exports = [ login, callback, logout, me, competitions, importCompetition ];
