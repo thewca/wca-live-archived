@@ -7,6 +7,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { CompetitionListComponent } from './competition-list/competition-list.component';
 import { RouterModule } from '@angular/router';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [
@@ -16,6 +18,8 @@ import { RouterModule } from '@angular/router';
     MatExpansionModule,
     MatMenuModule,
     MatIconModule,
+    MatTabsModule,
+    MatProgressSpinnerModule,
     RouterModule.forChild([])
   ],
   exports: [
@@ -24,6 +28,8 @@ import { RouterModule } from '@angular/router';
     MatExpansionModule,
     MatMenuModule,
     MatIconModule,
+    MatTabsModule,
+    MatProgressSpinnerModule,
     CompetitionListComponent
   ],
   declarations: [CompetitionListComponent]

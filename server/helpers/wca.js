@@ -80,6 +80,7 @@ wca.RoundFormats = [{
   shortName: 'Bo1',
   solveCount: 1,
   cutoffFormats: [],
+  computeAverage: false,
   sortBy: 'best',
 }, {
   id: '2',
@@ -87,7 +88,7 @@ wca.RoundFormats = [{
   shortName: 'Bo2',
   solveCount: 2,
   cutoffFormats: [ '1' ],
-  averageName: '',
+  computeAverage: false,
   sortBy: 'best',
 }, {
   id: '3',
@@ -95,7 +96,6 @@ wca.RoundFormats = [{
   shortName: 'Bo3',
   solveCount: 3,
   cutoffFormats: [ '1', '2' ],
-
   // 333bf is a best of 3, but people do get a mean, even though we don't
   // sort by it.
   computeAverage: false,
@@ -106,7 +106,6 @@ wca.RoundFormats = [{
   shortName: 'Ao5',
   solveCount: 5,
   cutoffFormats: [ '1', '2', '3' ],
-
   computeAverage: true,
   sortBy: 'average',
 }, {
@@ -115,7 +114,6 @@ wca.RoundFormats = [{
   shortName: 'Mo3',
   solveCount: 3,
   cutoffFormats: [ '1', '2' ],
-
   computeAverage: true,
   sortBy: 'average',
 }];

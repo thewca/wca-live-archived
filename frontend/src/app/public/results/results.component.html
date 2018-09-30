@@ -1,7 +1,32 @@
-<p *ngIf="(results$ | async) as results">
-  {{ results | json }}
-</p>
-
-<p *ngIf="(competitors$ | async) as competitors">
-  {{ competitors | json }}
-</p>
+<table>
+  <thead>
+    <tr>
+      <th>&nbsp;</th>
+      <th>Name</th>
+      <th>Solve 1</th>
+      <th>Solve 2</th>
+      <th>Solve 3</th>
+      <th>Solve 4</th>
+      <th>Solve 5</th>
+      <th>Average</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="(results$ | async) as results">
+    <tr *ngFor="let result of results">
+      <td></td>
+      <td>{{ result.competitor.name }}</td>
+      <td *ngIf="result.solves.length >= 1">{{ result.solves[0].centiseconds | centiToDisplay }}</td>
+      <td *ngIf="result.solves.length < 1">&nbsp;</td>
+      <td *ngIf="result.solves.length >= 2">{{ result.solves[1].centiseconds | centiToDisplay }}</td>
+      <td *ngIf="result.solves.length < 2">&nbsp;</td>
+      <td *ngIf="result.solves.length >= 3">{{ result.solves[2].centiseconds | centiToDisplay }}</td>
+      <td *ngIf="result.solves.length < 3">&nbsp;</td>
+      <td *ngIf="result.solves.length >= 4">{{ result.solves[3].centiseconds | centiToDisplay }}</td>
+      <td *ngIf="result.solves.length < 4">&nbsp;</td>
+      <td *ngIf="result.solves.length >= 5">{{ result.solves[4].centiseconds | centiToDisplay }}</td>
+      <td *ngIf="result.solves.length < 5">&nbsp;</td>
+      <td *ngIf="result.average">{{ result.average.centiseconds | centiToDisplay }}</td>
+      <td *ngIf="!result.average">&nbsp;</td>
+    </tr>
+  </tbody>
+</table>

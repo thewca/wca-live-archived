@@ -22,7 +22,7 @@ const schema = new mongoose.Schema({
     required: true,
     enum: Events.map((event) => event.id)
   }]
-}, { toJSON: { virtuals: true } });
+}, { toJSON: { virtuals: true }, toObject: { virtuals: true } });
 
 schema.virtual('competitor', {
   ref: 'Person',

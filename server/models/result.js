@@ -13,6 +13,11 @@ const schema = new mongoose.Schema({
     required: true,
     index: true
   },
+  registrationId: {
+    type: Number,
+    required: true,
+    index: true
+  },
   eventId: {
     type: String,
     required: true,
@@ -20,7 +25,7 @@ const schema = new mongoose.Schema({
     index: true
   },
   round: {
-    type: String,
+    type: Number,
     required: true,
     index: true
   },
@@ -36,6 +41,13 @@ const schema = new mongoose.Schema({
     type: SolveTime,
     required: false
   }
+});
+
+schema.virtual('competitor', {
+  ref: 'Person',
+  localField: 'competitorId',
+  foreignField: 'id',
+  justOne: true
 });
 
 module.exports = mongoose.model('Result', schema, 'results');

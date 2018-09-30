@@ -9,6 +9,8 @@ const fetch = require('node-fetch');
 const Competition = require('../../models/competition');
 const Person = require('../../models/person');
 const Registration = require('../../models/registration');
+const Result = require('../../models/result');
+const calcAvg = require('../../helpers/average');
 
 let configFile = 'config/' + process.env.NODE_ENV;
 const config = require(configFile);
@@ -182,13 +184,6 @@ const importCompetition = post('/auth/competition/:id', auth, async ctx => {
       }, { upsert: true });
     }
   });
-  result.events.forEach(event => {
-    event.rounds.forEach(round => {
-      round.roundResults.forEach(result => {
-        // save results
-      });
-    });
-  });
   if (competition) {
     return competition;
   } else {
@@ -196,4 +191,37 @@ const importCompetition = post('/auth/competition/:id', auth, async ctx => {
   }
 });
 
-module.exports = [ login, callback, logout, me, competitions, importCompetition ];
+const saveResult = put('/competition/:competitionId/:eventRoundId/results/:registrantId', auth, async ctx => {
+  let [ eventId, roundId ] = ctx.params.eventRoundId.split('-r');
+  let competition = await Competition.findOne({ id: ctx.params.competitionId }).exec();
+  let event = competition.events.filter(e => e.id === eventId)[0];
+  let round = event.rounds.filter(r => r.id === ctx.params.eventRoundId)[0];
+  let registration = await Registration.findOne({ competitionId: ctx.params.competitionId, registrantId: ctx.params.registrantId }).exec();
+  let result = {
+    competitionId: ctx.params.competitionId,
+    competitorId: registration.competitorId,
+    registrationId: ctx.params.registrantId,
+    eventId: eventId,
+    round: roundId,
+    competitorWcaId: registration.competitor.wcaId,
+    solves: [],
+    average: null
+  };
+  ctx.data.forEach(r => {
+    result.solves.push({ centiseconds: r });
+  });
+  let avg = calcAvg(ctx.data, round);
+  if (avg) {
+    result.average = {
+      centiseconds: avg
+    };
+  }
+  await Result.findOneAndUpdate({
+    competitionId: ctx.params.competitionId,
+    eventId: eventId,
+    round: roundId,
+    registrationId: ctx.params.registrantId
+  }, result, { upsert: true });
+});
+
+module.exports = [ login, callback, logout, me, competitions, importCompetition, saveResult ];

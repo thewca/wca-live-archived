@@ -5,6 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { CompetitionService } from './competition/competition.service';
 import { TimeService } from './time/time.service';
 import { PersonService } from './person/person.service';
+import { ResultService } from './result/result.service';
+import { CentiToDisplayPipe } from './centiToDisplay.pipe';
 
 @NgModule({
   imports: [
@@ -15,10 +17,15 @@ import { PersonService } from './person/person.service';
     AuthService,
     CompetitionService,
     TimeService,
-    PersonService
+    PersonService,
+    ResultService
+  ],
+  declarations: [
+    CentiToDisplayPipe
   ],
   exports: [
-    HttpClientModule
+    HttpClientModule,
+    CentiToDisplayPipe
   ]
 })
 export class CommonServicesModule { }

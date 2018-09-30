@@ -19,12 +19,4 @@ const getAll = get('/competition', async ctx => {
   return competitions;
 });
 
-const getCompetitors = get('/competition/:id/competitors', async ctx => {
-  if (!ctx.params.id) {
-    return server.reply.status(404).send('Missing competition id');
-  }
-  let competitors = await Registration.find({ competitionId: ctx.params.id }).exec();
-  return competitors;
-});
-
-module.exports = [ getById, getAll, getCompetitors ];
+module.exports = [ getById, getAll ];

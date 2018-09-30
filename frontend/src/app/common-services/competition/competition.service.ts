@@ -41,8 +41,4 @@ export class CompetitionService {
       map(dto => Competition.fromDto(dto))
     );
   }
-
-  public getResults(compId: string, roundId: string): Observable<any> {
-    return this.http.get<any>(`${Constants.API_URL}api/competitions/${compId}/results/${roundId}`);
-  }
 }

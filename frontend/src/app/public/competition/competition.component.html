@@ -1,13 +1,42 @@
-<div *ngIf="(competition$ | async) as competition">
+<div  *ngIf="(competition$ | async) as competition">
   <h2>{{ competition.name }}</h2>
-  <mat-accordion displayMode="flat">
-    <mat-expansion-panel *ngFor="let event of competition.events; trackBy: eventTracker">
-      <mat-expansion-panel-header>
-        <mat-panel-title><h4>{{ event.id }}</h4></mat-panel-title>
-      </mat-expansion-panel-header>
-      <p *ngFor="let round of event.rounds; trackBy: roundTracker">
-        <a [routerLink]="['results', round.id]">{{ roundName(round.id, event.rounds.length) }}</a>
-      </p>
-    </mat-expansion-panel>
-  </mat-accordion>
+
+  <mat-tab-group>
+
+    <mat-tab label="Per Event">
+      <mat-accordion displayMode="flat">
+        <mat-expansion-panel *ngFor="let event of competition.events; trackBy: eventTracker">
+          <mat-expansion-panel-header>
+            <mat-panel-title><h4>{{ event.id }}</h4></mat-panel-title>
+          </mat-expansion-panel-header>
+          <p *ngFor="let round of event.rounds; trackBy: roundTracker">
+            <a [routerLink]="['results', round.id]">{{ roundName(round.id, event.rounds.length) }}</a>
+          </p>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-tab>
+
+    <mat-tab label="Per Competitor" *ngIf="(registrations$ | async) as registrations">
+      <mat-accordion displayMode="flat">
+        <mat-expansion-panel *ngFor="let registration of registrations; trackBy: registrationTracker">
+          <mat-expansion-panel-header>
+            <mat-panel-title><h4>
+              {{ registration.competitor.name }}
+              <span *ngIf="registration.competitor.wcaId">({{ registration.competitor.wcaId }})</span>
+            </h4></mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+            <div *ngIf="(getResults(competition.id, registration.registrantId) | async) as results; else loading">
+              <p *ngIf="results.length === 0">No results yet for {{ registration.competitor.name }}</p>
+            </div>
+          </ng-template>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-tab>
+
+  </mat-tab-group>
 </div>
+
+<ng-template #loading>
+  <mat-spinner></mat-spinner> Loading...
+</ng-template>
