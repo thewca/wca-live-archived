@@ -40,6 +40,11 @@ const schema = new mongoose.Schema({
   average: {
     type: SolveTime,
     required: false
+  },
+  ranking: {
+    type: Number,
+    min: 1,
+    required: false
   }
 });
 

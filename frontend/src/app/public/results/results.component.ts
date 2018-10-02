@@ -49,42 +49,9 @@ export class ResultsComponent implements OnInit {
         return r;
       }),
       map(results => results.sort((a, b) => {
-        if (a.average && b.average) {
-          if (a.average.centiseconds < b.average.centiseconds) {
-            return -1;
-          }
-          if (a.average.centiseconds > b.average.centiseconds) {
-            return 1;
-          }
-        }
-        if (a.average && !b.average) {
-          return -1;
-        }
-        if (b.average && !a.average) {
-          return 1;
-        }
-        let bestA: number;
-        let bestB: number;
-        a.solves.forEach(s => {
-          if (bestA === null || s.centiseconds < bestA) bestA = s.centiseconds;
-        });
-        b.solves.forEach(s => {
-          if (bestB === null || s.centiseconds < bestB) bestB = s.centiseconds;
-        });
-        if (bestA && bestB) {
-          if (bestA < bestB) {
-            return -1;
-          }
-          if (bestA > bestB) {
-            return 1;
-          }
-        }
-        if (bestA && !bestB) {
-          return -1;
-        }
-        if (bestB && !bestA) {
-          return 1;
-        }
+        if (a.ranking < b.ranking) return -1;
+        if (a.ranking > b.ranking) return 1;
+        
         if (a.competitor.name < b.competitor.name) {
           return -1;
         }

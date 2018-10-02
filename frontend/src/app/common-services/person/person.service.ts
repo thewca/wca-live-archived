@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Constants } from "../constants";
+import { environment } from "../../../environments/environment";
 
 @Injectable()
 export class PersonService {
@@ -10,10 +10,10 @@ export class PersonService {
   ) {}
 
   public getCompetitorsForRound(competitionId: string, eventRoundId: string): Observable<any[]> {
-    return this._http.get<any[]>(`${Constants.API_URL}competition/${competitionId}/${eventRoundId}/competitors`);
+    return this._http.get<any[]>(`${environment.apiUrl}competition/${competitionId}/${eventRoundId}/competitors`);
   }
 
   public getForCompetition(competitionId: string): Observable<any[]> {
-    return this._http.get<any[]>(`${Constants.API_URL}competition/${competitionId}/competitors`);
+    return this._http.get<any[]>(`${environment.apiUrl}competition/${competitionId}/competitors`);
   }
 }

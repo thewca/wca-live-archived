@@ -1,7 +1,7 @@
 <table>
   <thead>
     <tr>
-      <th>&nbsp;</th>
+      <th class="ranking">&nbsp;</th>
       <th>Name</th>
       <th>Solve 1</th>
       <th>Solve 2</th>
@@ -13,7 +13,7 @@
   </thead>
   <tbody *ngIf="(results$ | async) as results">
     <tr *ngFor="let result of results">
-      <td></td>
+      <td class="ranking">{{ result.ranking || '&nbsp;' }}</td>
       <td>{{ result.competitor.name }}</td>
       <td *ngIf="result.solves.length >= 1">{{ result.solves[0].centiseconds | centiToDisplay }}</td>
       <td *ngIf="result.solves.length < 1">&nbsp;</td>
@@ -25,7 +25,7 @@
       <td *ngIf="result.solves.length < 4">&nbsp;</td>
       <td *ngIf="result.solves.length >= 5">{{ result.solves[4].centiseconds | centiToDisplay }}</td>
       <td *ngIf="result.solves.length < 5">&nbsp;</td>
-      <td *ngIf="result.average">{{ result.average.centiseconds | centiToDisplay }}</td>
+      <td *ngIf="result.average" class="average">{{ result.average.centiseconds | centiToDisplay }}</td>
       <td *ngIf="!result.average">&nbsp;</td>
     </tr>
   </tbody>

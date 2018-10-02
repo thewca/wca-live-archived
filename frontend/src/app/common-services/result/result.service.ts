@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, of } from "rxjs";
-import { Constants } from "../constants";
 import { tap } from "rxjs/operators";
+import { environment } from "../../../environments/environment";
 
 @Injectable()
 export class ResultService {
@@ -17,7 +17,7 @@ export class ResultService {
     if (this._resultsPerRegistrant.hasOwnProperty(key) && !skipCache) {
       return of(this._resultsPerRegistrant[key]);
     }
-    let url = `${Constants.API_URL}competition/${competitionId}/competitors/${registrantId}/results`;
+    let url = `${environment.apiUrl}competition/${competitionId}/competitors/${registrantId}/results`;
     if (this.running.hasOwnProperty(url)) {
       return this.running[url];
     }
@@ -36,7 +36,7 @@ export class ResultService {
     if (this._resultsPerRound.hasOwnProperty(key)) {
       return of(this._resultsPerRound[key]);
     }
-    let url = `${Constants.API_URL}competition/${competitionId}/${eventRoundId}/results`;
+    let url = `${environment.apiUrl}competition/${competitionId}/${eventRoundId}/results`;
     if (this.running.hasOwnProperty(url)) {
       return this.running[url];
     }

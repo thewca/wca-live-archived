@@ -11,6 +11,7 @@ const Person = require('../../models/person');
 const Registration = require('../../models/registration');
 const Result = require('../../models/result');
 const calcAvg = require('../../helpers/average');
+const calcRankings = require('../../helpers/ranking');
 
 let configFile = 'config/' + process.env.NODE_ENV;
 const config = require(configFile);
@@ -222,6 +223,6 @@ const saveResult = put('/competition/:competitionId/:eventRoundId/results/:regis
     round: roundId,
     registrationId: ctx.params.registrantId
   }, result, { upsert: true });
-});
+}, calcRankings);
 
 module.exports = [ login, callback, logout, me, competitions, importCompetition, saveResult ];

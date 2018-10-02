@@ -11,6 +11,7 @@ const corsExpress = require('cors')({
   origin: ['http://localhost:4200', 'https://live.worldcubeassociation.org'],
   credentials: true
 });
+const port = process.env.PORT || 3000;
 
 const routes = require('./api/index');
 
@@ -27,7 +28,8 @@ mongoose.connect(config.mongoDb, { useNewUrlParser: true });
 server(
   {
     session: { store },
-    security: { csrf: false }
+    security: { csrf: false },
+    port: port
   },
   server.utils.modern(corsExpress),
   server.utils.modern(passport.initialize()),
@@ -37,4 +39,4 @@ server(
   error(ctx => status(500).send(ctx.error.message))
 );
 
-console.log('Server started');
+console.log('Server started on port ' + port);
