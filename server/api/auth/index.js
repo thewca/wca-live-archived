@@ -145,7 +145,13 @@ const importCompetition = post('/auth/competition/:id', auth, async ctx => {
       return server.reply.status(err.code).send(err.msg);
     })
   ;
-  return result;
+  result.events.forEach(e => {
+    e.rounds.forEach(r => {
+      if (r.id.indexOf('-r1') > -1) {
+        r.opened = true;
+      }
+    });
+  });
   let competition = await Competition.findOneAndUpdate({
     id: ctx.params.id
   }, {
@@ -176,14 +182,34 @@ const importCompetition = post('/auth/competition/:id', auth, async ctx => {
     if (person.registration && person.registration.status === 'accepted') {
       await Registration.findOneAndUpdate({
         competitionId: ctx.params.id,
-        competitorId: person.wcaUserId
+        competitorId: person.id
       }, {
         competitionId: ctx.params.id,
         competitorId: person.wcaUserId,
         registrantId: person.registrantId,
         events: person.registration.eventIds
       }, { upsert: true });
+      person.registration.eventIds.forEach(async e => {
+        await Result.findOneAndUpdate({
+          competitionId: ctx.params.id,
+          eventId: e,
+          round: 1,
+          registrationId: person.registrantId
+        }, {
+          competitionId: ctx.params.id,
+          competitorId: person.wcaUserId,
+          registrationId: person.registrantId,
+          eventId: e,
+          round: 1,
+          competitorWcaId: person.wcaId,
+          solves: [],
+          average: null
+        }, { upsert: true });
+      });
     }
+  });
+  result.events.forEach(async e => {
+    await calcRankings({params: { competitionId: ctx.params.id, eventRoundId: `${e.id}-r1`}});
   });
   if (competition) {
     return competition;

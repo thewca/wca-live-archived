@@ -1,11 +1,13 @@
+const Result = require('../models/result');
+
 module.exports = async function (ctx) {
   let [ eventId, roundId ] = ctx.params.eventRoundId.split('-r');
   let results = await Result.find({
     competitionId: ctx.params.competitionId,
     eventId: eventId,
     round: roundId
-  }).exec();
-  results = results.sort((a, b) => {
+  }).populate('competitor').lean().exec();
+  results.sort((a, b) => {
     let avgA = null;
     let avgB = null;
 
@@ -75,7 +77,7 @@ module.exports = async function (ctx) {
   });
   let currentRanking = 1;
   let numWithThisRanking = 0;
-  results.forEach((r, ix) => {
+  results.forEach(async (r, ix) => {
     if (ix > 0) {
       let a = results[ix - 1];
       let b = results[ix];
@@ -102,6 +104,6 @@ module.exports = async function (ctx) {
     }
     r.ranking = currentRanking;
     numWithThisRanking++;
-    Ranking.findByIdAndUpdate(r._id, r);
+    await Result.findByIdAndUpdate(r._id, { ranking: r.ranking }).exec();
   });
 };

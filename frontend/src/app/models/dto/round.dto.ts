@@ -3,4 +3,5 @@ export class RoundDto {
   public id: string;
   public results: any[];
   public timeLimit: { cumulativeRoundIds: string[], centiseconds: number };
+  public opened: boolean;
 }

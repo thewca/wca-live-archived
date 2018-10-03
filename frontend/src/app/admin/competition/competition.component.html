@@ -6,7 +6,8 @@
         <mat-panel-title><h4>{{ event.id }}</h4></mat-panel-title>
       </mat-expansion-panel-header>
       <p *ngFor="let round of event.rounds; trackBy: roundTracker">
-        <a [routerLink]="['results', round.id]">{{ roundName(round.id, event.rounds.length) }}</a>
+        <a [routerLink]="['results', round.id]" *ngIf="round.opened">{{ roundName(round.id, event.rounds.length) }}</a>
+        <span *ngIf="!round.opened" title="This round hasn't been opened yet!">{{ roundName(round.id, event.rounds.length) }}</span>
       </p>
     </mat-expansion-panel>
   </mat-accordion>

@@ -36,5 +36,9 @@ module.exports = new mongoose.Schema({
     level: {
       type: 'Mixed',
     }
+  },
+  opened: {
+    type: Boolean,
+    default: false
   }
 });
