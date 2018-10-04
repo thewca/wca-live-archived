@@ -1,3 +1,7 @@
-<p>
-  competitor-search works!
-</p>
+<mat-form-field>
+  <input type="text" matInput [formControl]="input" [matAutocomplete]="auto" />
+</mat-form-field>
+
+<mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption [displayWith]="displayFn">
+  <mat-option *ngFor="let option of options$ | async" [value]="option">{{ option.name }}</mat-option>
+</mat-autocomplete>

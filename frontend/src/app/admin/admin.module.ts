@@ -10,6 +10,10 @@ import { ResultsComponent } from './results/results.component';
 import { CommonServicesModule } from '../common-services/common-services.module';
 import { CompetitorSearchComponent } from './components/competitor-search/competitor-search.component';
 import { ResultsInputComponent } from './components/results-input/results-input.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   imports: [
@@ -18,7 +22,11 @@ import { ResultsInputComponent } from './components/results-input/results-input.
     AdminRoutingModule,
     MatButtonModule,
     MatExpansionModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   declarations: [CompetitionsComponent, CompetitionComponent, ResultsComponent, CompetitorSearchComponent, ResultsInputComponent]
 })

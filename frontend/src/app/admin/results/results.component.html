@@ -1,5 +1,5 @@
 <aside>
-  <wca-results-input></wca-results-input>
+  <wca-results-input [competitors]="competitors" *ngIf="(competitors$ | async) as competitors"></wca-results-input>
 </aside>
 <table>
   <thead>

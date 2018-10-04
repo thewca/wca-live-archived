@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'wca-results-input',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./results-input.component.scss']
 })
 export class ResultsInputComponent implements OnInit {
+
+  @Input()
+  public competitors: any[];
 
   constructor() { }
 
