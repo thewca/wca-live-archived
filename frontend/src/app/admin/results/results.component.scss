@@ -1,4 +1,35 @@
 :host {
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-start;
+
+  aside {
+    width: 15vw;
+    min-width: 200px;
+    height: calc(100vh - 64px);
+    flex: 0 0 15vw;
+
+    wca-results-input {
+      width: 15vw;
+      min-width: 200px;
+      height: calc(100vh - 64px);
+      position: fixed;
+    }
+  }
+
+  table {
+    width: 85vw;
+    flex: 1 1 85vw;
+    position: relative;
+  }
+
+  thead th {
+    position: sticky;
+    top: 64px;
+    background-color: white;
+  }
+
   th {
     text-align: left;
   }

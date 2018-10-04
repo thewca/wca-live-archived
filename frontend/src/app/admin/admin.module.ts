@@ -8,6 +8,8 @@ import { CompetitionComponent } from './competition/competition.component'
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ResultsComponent } from './results/results.component';
 import { CommonServicesModule } from '../common-services/common-services.module';
+import { CompetitorSearchComponent } from './components/competitor-search/competitor-search.component';
+import { ResultsInputComponent } from './components/results-input/results-input.component';
 
 @NgModule({
   imports: [
@@ -18,6 +20,6 @@ import { CommonServicesModule } from '../common-services/common-services.module'
     MatExpansionModule,
     MatSnackBarModule
   ],
-  declarations: [CompetitionsComponent, CompetitionComponent, ResultsComponent]
+  declarations: [CompetitionsComponent, CompetitionComponent, ResultsComponent, CompetitorSearchComponent, ResultsInputComponent]
 })
 export class AdminModule { }

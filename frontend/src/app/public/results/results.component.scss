@@ -1,4 +1,16 @@
 :host {
+  table {
+    width: 85vw;
+    flex: 1 1 85vw;
+    position: relative;
+  }
+
+  thead th {
+    position: sticky;
+    top: 64px;
+    background-color: white;
+  }
+  
   th {
     text-align: left;
   }
