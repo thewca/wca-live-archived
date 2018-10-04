@@ -1,0 +1,17 @@
+:host {
+  th {
+    text-align: left;
+  }
+
+  th, td {
+    padding: .2rem;
+  }
+
+  .ranking {
+    width: 2rem;
+  }
+
+  .average, .best {
+    font-weight: bold;
+  }
+}
