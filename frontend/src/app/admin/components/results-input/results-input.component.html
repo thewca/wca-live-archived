@@ -1,1 +1,11 @@
-<wca-competitor-search [competitors]="competitors"></wca-competitor-search>
+<wca-competitor-search
+  [competitors]="competitors"
+  [competitor]="selectedCompetitor"
+  (change)="selectedCompetitor = $event"
+></wca-competitor-search>
+
+<wca-time-input attempt="1" [disabled]="!selectedCompetitor"></wca-time-input>
+<wca-time-input attempt="2" [disabled]="!selectedCompetitor"></wca-time-input>
+<wca-time-input attempt="3" [disabled]="!selectedCompetitor"></wca-time-input>
+<wca-time-input attempt="4" [disabled]="!selectedCompetitor"></wca-time-input>
+<wca-time-input attempt="5" [disabled]="!selectedCompetitor"></wca-time-input>

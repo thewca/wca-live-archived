@@ -14,6 +14,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { TimeInputComponent } from './components/time-input/time-input.component';
+import { TimePipe } from './pipes/time/time.pipe';
 
 @NgModule({
   imports: [
@@ -28,6 +30,6 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule
   ],
-  declarations: [CompetitionsComponent, CompetitionComponent, ResultsComponent, CompetitorSearchComponent, ResultsInputComponent]
+  declarations: [CompetitionsComponent, CompetitionComponent, ResultsComponent, CompetitorSearchComponent, ResultsInputComponent, TimeInputComponent, TimePipe]
 })
 export class AdminModule { }

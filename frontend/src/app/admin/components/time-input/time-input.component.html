@@ -1,0 +1,7 @@
+<mat-form-field appearance="outline">
+  <input type="text" matInput [disabled]="disabled" #input />
+</mat-form-field>
+
+<div (click)="input.focus()">
+  {{ input.value | time }}
+</div>

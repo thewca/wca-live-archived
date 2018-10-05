@@ -1,5 +1,9 @@
 <aside>
-  <wca-results-input [competitors]="competitors" *ngIf="(competitors$ | async) as competitors"></wca-results-input>
+  <wca-results-input
+    [competitors]="competitors"
+    *ngIf="(competitors$ | async) as competitors"
+    [competitor]="selectedCompetitor"
+  ></wca-results-input>
 </aside>
 <table>
   <thead>
@@ -16,7 +20,7 @@
     </tr>
   </thead>
   <tbody *ngIf="(results$ | async) as results">
-    <tr *ngFor="let result of results">
+    <tr *ngFor="let result of results" (click)="selectCompetitor(result)">
       <td class="ranking">{{ result.ranking || '&nbsp;' }}</td>
       <td class="registationId">{{ result.registrationId }}</td>
       <td>{{ result.competitor.name }}</td>

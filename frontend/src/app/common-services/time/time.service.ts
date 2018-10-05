@@ -39,6 +39,26 @@ export class TimeService {
     return 6000 * parseInt(m, 10) + 100 * parseInt(s, 10) + parseInt(cs, 10);
   }
 
+  public inputToDisplay(input: string): string {
+    if (input.length === 0) {
+      return '';
+    }
+    if (input.indexOf('*') > -1 || input.indexOf('s') > -1) {
+      return 'DNS';
+    }
+    if (input.indexOf('/') > -1 || input.indexOf('f') > -1) {
+      return 'DNF';
+    }
+    let length = input.length;
+    input = ('000000' + input).substr(-6);
+    let s = parseInt(input.substr(-4,2) || '0', 10);
+    let ms = parseInt(input.substr(-2), 10);
+    if (length > 4) {
+      return `${input.substr(0, input.length - 4)}:${this.prefix(s)}.${this.prefix(ms)}`;
+    }
+    return `${this.prefix(s)}.${this.prefix(ms)}`;
+  }
+
   private prefix(n: number): string {
     if (n < 10) {
       return `0${n}`;

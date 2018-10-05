@@ -7,6 +7,9 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ResultsInputComponent implements OnInit {
 
+  @Input('competitor')
+  public selectedCompetitor: any;
+
   @Input()
   public competitors: any[];
 

@@ -12,9 +12,12 @@ import { ResultService } from '../../common-services/result/result.service';
 export class ResultsComponent implements OnInit {
   public results$: Observable<any[]>;
   public competitors$: Observable<any[]>;
+  public selectedCompetitor: any;
 
   constructor(private route: ActivatedRoute, private readonly _resultService: ResultService) {
+  }
 
+  ngOnInit() {
     this.results$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => this._resultService.getForRound(params.get('id'),params.get('roundId')))
     );
@@ -26,6 +29,7 @@ export class ResultsComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
+  public selectCompetitor(result) {
+    this.selectedCompetitor = { ...result.competitor, registrationId: result.registrationId };
   }
 }
