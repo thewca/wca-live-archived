@@ -37,8 +37,8 @@ export class TimeInputComponent implements OnInit {
     this._input.nativeElement.value = '';
   }
 
-  @HostListener('keydown.enter')
-  @HostListener('keydown.tab')
+  @HostListener('keyup.enter')
+  @HostListener('keyup.tab')
   @HostListener('blur')
   public _done() {
     this.changed.emit(this._timeService.inputToCenti(this._input.nativeElement.value));

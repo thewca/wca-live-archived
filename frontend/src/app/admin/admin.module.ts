@@ -28,7 +28,8 @@ import { TimePipe } from './pipes/time/time.pipe';
     MatAutocompleteModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatButtonModule
   ],
   declarations: [CompetitionsComponent, CompetitionComponent, ResultsComponent, CompetitorSearchComponent, ResultsInputComponent, TimeInputComponent, TimePipe]
 })

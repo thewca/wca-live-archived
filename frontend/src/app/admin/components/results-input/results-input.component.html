@@ -11,3 +11,5 @@
 <wca-time-input attempt="5" [disabled]="isAttemptDisabled(5)" (focus)="setFocussed(5)" (changed)="setResult(5, $event)" *ngIf="numAttempts >= 5"></wca-time-input>
 
 <span *ngIf="average">{{ average }}</span>
+
+<button mat-raised-button (click)="saveResults()" [disabled]="!inputComplete" #save>Save</button>

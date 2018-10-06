@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, ViewChildren, QueryList, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList, OnChanges, SimpleChanges, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { AverageService } from '../../../common-services/average/average.service';
 import { TimeInputComponent } from '../time-input/time-input.component';
 import { Round } from '../../../models/round.model';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'wca-results-input',
@@ -18,6 +19,9 @@ export class ResultsInputComponent implements OnInit, OnChanges {
 
   @Input()
   public competitors: any[];
+
+  @ViewChild('save')
+  private _saveButton: MatButton;
 
   @ViewChildren(TimeInputComponent)
   private _inputs: QueryList<TimeInputComponent>;
@@ -82,13 +86,18 @@ export class ResultsInputComponent implements OnInit, OnChanges {
     }
   }
 
-  constructor(private readonly _averageService: AverageService) { }
+  public get inputComplete(): boolean {
+    return this._results.length === this.numAttempts || (!this.madeCutoff && this._results.length === this.cutoffAttempts);
+  }
+
+  constructor(private readonly _averageService: AverageService, private readonly _cd: ChangeDetectorRef) { }
 
   ngOnInit() {
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.competitor || changes.selectedCompetitor) {
+      this._cd.detectChanges();
       this._results = [];
       this.setFocussed(1);
       if (this._inputs) {
@@ -110,15 +119,24 @@ export class ResultsInputComponent implements OnInit, OnChanges {
   public setFocussed(attempt: number) {
     this._currentAttempt = attempt;
     if (this._inputs) {
-      this._inputs.toArray()[this._currentAttempt - 1].onFocus();
+      let input = this._inputs.toArray()[this._currentAttempt - 1];
+      if (input) input.onFocus();
     }
   }
 
   public setResult(attempt: number, centi: number) {
     this._results[attempt - 1] = centi;
-    if (attempt < this._inputs.length) {
+    this._cd.detectChanges();
+    if (attempt < this.numAttempts) {
       this.setFocussed(attempt + 1);
+    } else if (this._saveButton) {
+      this._saveButton.focus();
     }
+  }
+
+  public saveResults() {
+    console.log('saveResults');
+    console.log(this.results, this.selectedCompetitor);
   }
 
 }
