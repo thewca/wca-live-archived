@@ -1,5 +1,5 @@
 <mat-form-field appearance="outline">
-  <input type="text" matInput [disabled]="disabled" #input />
+  <input type="text" matInput [disabled]="disabled" #input (focus)="focus.emit()" />
 </mat-form-field>
 
 <div (click)="input.focus()">

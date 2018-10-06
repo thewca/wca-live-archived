@@ -59,6 +59,11 @@ export class TimeService {
     return `${this.prefix(s)}.${this.prefix(ms)}`;
   }
 
+  public inputToCenti(input: string): number {
+    let d = this.inputToDisplay(input);
+    return this.displayToCenti(d);
+  }
+
   private prefix(n: number): string {
     if (n < 10) {
       return `0${n}`;

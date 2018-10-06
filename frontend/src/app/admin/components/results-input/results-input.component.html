@@ -4,8 +4,10 @@
   (change)="selectedCompetitor = $event"
 ></wca-competitor-search>
 
-<wca-time-input attempt="1" [disabled]="!selectedCompetitor"></wca-time-input>
-<wca-time-input attempt="2" [disabled]="!selectedCompetitor"></wca-time-input>
-<wca-time-input attempt="3" [disabled]="!selectedCompetitor"></wca-time-input>
-<wca-time-input attempt="4" [disabled]="!selectedCompetitor"></wca-time-input>
-<wca-time-input attempt="5" [disabled]="!selectedCompetitor"></wca-time-input>
+<wca-time-input attempt="1" [disabled]="!selectedCompetitor" (focus)="setFocussed(1)" (changed)="setResult(1, $event)"></wca-time-input>
+<wca-time-input attempt="2" [disabled]="!selectedCompetitor" (focus)="setFocussed(2)" (changed)="setResult(2, $event)"></wca-time-input>
+<wca-time-input attempt="3" [disabled]="!selectedCompetitor" (focus)="setFocussed(3)" (changed)="setResult(3, $event)"></wca-time-input>
+<wca-time-input attempt="4" [disabled]="!selectedCompetitor" (focus)="setFocussed(4)" (changed)="setResult(4, $event)"></wca-time-input>
+<wca-time-input attempt="5" [disabled]="!selectedCompetitor" (focus)="setFocussed(5)" (changed)="setResult(5, $event)"></wca-time-input>
+
+<span *ngIf="results.length === 5">{{ average }}</span>
