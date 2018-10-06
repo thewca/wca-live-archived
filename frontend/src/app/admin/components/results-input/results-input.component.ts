@@ -115,6 +115,17 @@ export class ResultsInputComponent implements OnInit, OnChanges {
       this._reset();
       this.selectedCompetitor = (changes.competitor || changes.selectedCompetitor).currentValue;
       this._cd.detectChanges();
+      document.activeElement && (document.activeElement as any).blur();
+      this.setFocussed(1);
+    }
+  }
+
+  public setSelectedCompetitor(competitor: any) {
+    if (competitor.registrationId) {
+      this._reset();
+      this.selectedCompetitor = competitor;
+      this._cd.detectChanges();
+      document.activeElement && (document.activeElement as any).blur();
       this.setFocussed(1);
     }
   }
@@ -138,6 +149,9 @@ export class ResultsInputComponent implements OnInit, OnChanges {
   }
 
   public setResult(attempt: number, centi: number) {
+    if (centi == null || centi == undefined || Number.isNaN(centi)) {
+      return;
+    }
     this._results[attempt - 1] = centi;
     this._cd.detectChanges();
     if (attempt < this.numAttempts) {
@@ -150,13 +164,13 @@ export class ResultsInputComponent implements OnInit, OnChanges {
   public saveResults() {
     this._resultService.saveResult(this.competitionId, this.round.id, this.selectedCompetitor.registrationId, this._results).subscribe(() => {
       this._reset();
+      this.selectedCompetitor = null;
       this.done.emit();
       this._search.focus();
     });
   }
 
   private _reset() {
-    this.selectedCompetitor = null;
     this._results = [];
     this._currentAttempt = 1;
     if (this._inputs) {

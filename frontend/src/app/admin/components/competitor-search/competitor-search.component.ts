@@ -42,6 +42,12 @@ export class CompetitorSearchComponent implements OnInit, OnChanges {
     });
   }
 
+  public selected($event) {
+    let competitor = $event.option.value;
+    this.competitor.value = competitor;
+    this.competitorChange.emit(competitor);
+  }
+
   public ngOnChanges(changes: SimpleChanges) {
     if (changes.competitor && (changes.competitor.currentValue == null || changes.competitor.currentValue == undefined || !changes.competitor.currentValue.preventDefault)) {
       this.input.setValue(changes.competitor.currentValue);

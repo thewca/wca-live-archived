@@ -1,7 +1,7 @@
 <wca-competitor-search
   [competitors]="competitors"
   [competitor]="selectedCompetitor"
-  (change)="selectedCompetitor = $event"
+  (change)="setSelectedCompetitor($event)"
   #search
 ></wca-competitor-search>
 
