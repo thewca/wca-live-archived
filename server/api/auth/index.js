@@ -223,7 +223,7 @@ const saveResult = put('/competition/:competitionId/:eventRoundId/results/:regis
   let competition = await Competition.findOne({ id: ctx.params.competitionId }).exec();
   let event = competition.events.filter(e => e.id === eventId)[0];
   let round = event.rounds.filter(r => r.id === ctx.params.eventRoundId)[0];
-  let registration = await Registration.findOne({ competitionId: ctx.params.competitionId, registrantId: ctx.params.registrantId }).exec();
+  let registration = await Registration.findOne({ competitionId: ctx.params.competitionId, registrantId: ctx.params.registrantId }).populate('competitor').exec();
   let result = {
     competitionId: ctx.params.competitionId,
     competitorId: registration.competitorId,
@@ -249,6 +249,6 @@ const saveResult = put('/competition/:competitionId/:eventRoundId/results/:regis
     round: roundId,
     registrationId: ctx.params.registrantId
   }, result, { upsert: true });
-}, calcRankings);
+}, calcRankings, ctx => server.reply.status(204).send());
 
 module.exports = [ login, callback, logout, me, competitions, importCompetition, saveResult ];

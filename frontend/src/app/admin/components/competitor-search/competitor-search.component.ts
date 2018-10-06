@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -23,6 +23,9 @@ export class CompetitorSearchComponent implements OnInit, OnChanges {
 
   public input = new FormControl();
 
+  @ViewChild('htmlInput')
+  private _htmlInput: ElementRef<HTMLInputElement>;
+
   constructor() { }
 
   ngOnInit() {
@@ -40,7 +43,7 @@ export class CompetitorSearchComponent implements OnInit, OnChanges {
   }
 
   public ngOnChanges(changes: SimpleChanges) {
-    if (changes.competitor && changes.competitor.currentValue && !changes.competitor.currentValue.preventDefault) {
+    if (changes.competitor && (changes.competitor.currentValue == null || changes.competitor.currentValue == undefined || !changes.competitor.currentValue.preventDefault)) {
       this.input.setValue(changes.competitor.currentValue);
     }
   }
@@ -50,6 +53,10 @@ export class CompetitorSearchComponent implements OnInit, OnChanges {
       return this.competitor ? `${this.competitor.registrationId} (${this.competitor.name})` : '';
     }
     return competitor ? `${competitor.registrationId} (${competitor.name})` : '';
+  }
+
+  public focus() {
+    this._htmlInput.nativeElement.focus();
   }
 
   private _filter(value: string): any[] {

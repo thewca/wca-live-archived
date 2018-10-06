@@ -4,6 +4,8 @@
     *ngIf="(competitors$ | async) as competitors"
     [competitor]="selectedCompetitor"
     [round]="round$ | async"
+    [competitionId]="competitionId"
+    (done)="loadResults()"
   ></wca-results-input>
 </aside>
 <table>

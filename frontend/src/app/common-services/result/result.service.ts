@@ -49,4 +49,11 @@ export class ResultService {
     this.running[url] = o;
     return o;
   }
+
+  public saveResult(competitionId: string, eventRoundId: string, registrationId: number, results: number[]): Observable<any> {
+    let url = `${environment.apiUrl}competition/${competitionId}/${eventRoundId}/results/${registrationId}`;
+    let key = competitionId + '-' + eventRoundId;
+    delete this._resultsPerRound[key];
+    return this._http.put(url, results, { withCredentials: true });
+  }
 }

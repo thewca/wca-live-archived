@@ -2,6 +2,7 @@
   [competitors]="competitors"
   [competitor]="selectedCompetitor"
   (change)="selectedCompetitor = $event"
+  #search
 ></wca-competitor-search>
 
 <wca-time-input attempt="1" [disabled]="isAttemptDisabled(1)" (focus)="setFocussed(1)" (changed)="setResult(1, $event)" *ngIf="numAttempts >= 1"></wca-time-input>

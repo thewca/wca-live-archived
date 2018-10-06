@@ -1,47 +1,90 @@
 const getFormat = require('./wca').getFormatById;
 
+function Mo3(results) {
+  if (results.length !== 3) {
+    return null;
+  }
+
+  for(var i = 0; i < results.length; i++) {
+    let r = results[i];
+    if (r < 0) {
+      return -1;
+    }
+  }
+
+  let mean = results.reduce((a, b)=> a + b, 0)/3;
+  if (mean >= 10 * 60 * 100) {
+    return Math.round(mean / 100) * 100;
+  }
+  return Math.round(mean);
+}
+
+function Ao5(results) {
+  if (results.length !== 5) {
+    return null;
+  }
+  let numInvalid = 0;
+  let best = Number.MAX_SAFE_INTEGER;
+  let worst = 0;
+
+  for (var i = 0; i < results.length; i++) {
+    let r = results[i];
+    if (r < 0) {
+      numInvalid++;
+      if (numInvalid > 1) {
+        return -1;
+      }
+    } else {
+      if (r < best) {
+        best = r;
+      }
+      if (r > worst) {
+        worst = r;
+      }
+    }
+  };
+
+  let calcWith = results.filter(r => r > 0);
+  let bestIx = calcWith.indexOf(best);
+  delete calcWith[bestIx];
+  if (numInvalid === 0) {
+    let worstIx = calcWith.lastIndexOf(worst);
+    delete calcWith[worstIx];
+  }
+
+  let avg = (calcWith.reduce((a, b) => a + b, 0))/3;
+
+  // 9f1 and 9f2 ( https://www.worldcubeassociation.org/regulations/#9f1 )
+  if (avg >= 10*60*100) { // 10 minutes in centiseconds)
+    avg = Math.round(avg / 100) * 100;
+  } else {
+    avg = Math.round(avg);
+  }
+
+  return avg;
+}
+
 module.exports = function(attempts, round) {
   let format = getFormat(round.format);
   if (!format.computeAverage) {
     return null;
   }
 
-  let madeCutoff = false;
+  let madeCutoff = true;
 
-  if (round.cutoff && round.cutoff.numberOfAttempts > 0 && round.cutoff.attemptResult > 0) {
-    let ai = 0;
-    attempts.forEach(a => {
-      if (ai <= round.cutoff.numberOfAttempts && a > 0 && a < round.cutoff.attemptResult) {
+  if (round.cutoff && round.cutoff.numberOfAttempts > 0) {
+    madeCutoff = false;
+    for (let i = 0; i < round.cutoff.numberOfAttempts; i++) {
+      let r = attempts[i];
+      if (r > 0 && r < round.cutoff.attemptResult) {
         madeCutoff = true;
       }
-    });
-  } else {
-    madeCutoff = true; // there is no cutoff, so you automatically made it
+    }
   }
 
   if (!madeCutoff) {
-    // no avg is calculated when cutoff is not made
     return null;
   }
 
-  if (attempts.length < format.solveCount) {
-    // competitor hasn't completed all attempts yet, so no avg can be calculated
-    return null;
-  }
-
-  let validAttempts = attempts.filter(a => a > 0);
-
-  // check if we have (at least) 3 or 4 valid attempts to calculate average for
-  if (validAttempts.length < (format.solveCount === 5 ? 4 : 3)) {
-    return -1;
-  }
-
-  let avgAttempts = validAttempts;
-
-  if (format.solveCount === 5) {
-    let max = Math.max(attempts);
-    delete avgAttempts[avgAttempts.indexOf(max)]; // use delete instead of filter to only ever delete 1 max, even when competitor may have 2 attempts with the same best time
-  }
-
-  return (avgAttempts.reduce((a,b) => a + b) / avgAttempts.length)
+  return format.id === 'a' ? Ao5(attempts) : Mo3(attempts);
 };

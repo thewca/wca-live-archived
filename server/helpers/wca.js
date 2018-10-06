@@ -153,7 +153,7 @@ wca.Rounds = [{
 }];
 
 wca.getEventById = (id) => wca.Events.find((e) => e.id === id);
-wca.getFormatById = (id) => wca.Formats.find((f) => f.id === id);
+wca.getFormatById = (id) => wca.RoundFormats.find((f) => f.id === id);
 wca.getRoundById = (id) => wca.Rounds.find((r) => r.id === id);
 
 module.exports = wca;

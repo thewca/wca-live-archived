@@ -1,8 +1,10 @@
-import { Component, OnInit, Input, ViewChildren, QueryList, OnChanges, SimpleChanges, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList, OnChanges, SimpleChanges, ViewChild, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { AverageService } from '../../../common-services/average/average.service';
 import { TimeInputComponent } from '../time-input/time-input.component';
 import { Round } from '../../../models/round.model';
 import { MatButton } from '@angular/material/button';
+import { ResultService } from '../../../common-services/result/result.service';
+import { CompetitorSearchComponent } from '../competitor-search/competitor-search.component';
 
 @Component({
   selector: 'wca-results-input',
@@ -10,6 +12,9 @@ import { MatButton } from '@angular/material/button';
   styleUrls: ['./results-input.component.scss']
 })
 export class ResultsInputComponent implements OnInit, OnChanges {
+
+  @Input()
+  public competitionId: string;
 
   @Input('competitor')
   public selectedCompetitor: any;
@@ -20,8 +25,14 @@ export class ResultsInputComponent implements OnInit, OnChanges {
   @Input()
   public competitors: any[];
 
+  @Output()
+  public done: EventEmitter<void> = new EventEmitter<void>();
+
   @ViewChild('save')
   private _saveButton: MatButton;
+
+  @ViewChild(CompetitorSearchComponent)
+  private _search: CompetitorSearchComponent;
 
   @ViewChildren(TimeInputComponent)
   private _inputs: QueryList<TimeInputComponent>;
@@ -56,7 +67,7 @@ export class ResultsInputComponent implements OnInit, OnChanges {
       return true;
     }
     for (var i = 0; i < this.round.cutoff.numberOfAttempts; i++) {
-      if (this._results[i] < this.round.cutoff.attemptResult) {
+      if (this.results[i] > 0 && this._results[i] < this.round.cutoff.attemptResult) {
         return true;
       }
     }
@@ -90,19 +101,21 @@ export class ResultsInputComponent implements OnInit, OnChanges {
     return this._results.length === this.numAttempts || (!this.madeCutoff && this._results.length === this.cutoffAttempts);
   }
 
-  constructor(private readonly _averageService: AverageService, private readonly _cd: ChangeDetectorRef) { }
+  constructor(
+    private readonly _averageService: AverageService,
+    private readonly _cd: ChangeDetectorRef,
+    private readonly _resultService: ResultService
+  ) { }
 
   ngOnInit() {
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.competitor || changes.selectedCompetitor) {
+      this._reset();
+      this.selectedCompetitor = (changes.competitor || changes.selectedCompetitor).currentValue;
       this._cd.detectChanges();
-      this._results = [];
       this.setFocussed(1);
-      if (this._inputs) {
-        this._inputs.forEach(input => input.reset());
-      }
     }
   }
 
@@ -135,8 +148,21 @@ export class ResultsInputComponent implements OnInit, OnChanges {
   }
 
   public saveResults() {
-    console.log('saveResults');
-    console.log(this.results, this.selectedCompetitor);
+    this._resultService.saveResult(this.competitionId, this.round.id, this.selectedCompetitor.registrationId, this._results).subscribe(() => {
+      this._reset();
+      this.done.emit();
+      this._search.focus();
+    });
+  }
+
+  private _reset() {
+    this.selectedCompetitor = null;
+    this._results = [];
+    this._currentAttempt = 1;
+    if (this._inputs) {
+      this._inputs.forEach(input => input.reset());
+    }
+    this._cd.detectChanges();
   }
 
 }

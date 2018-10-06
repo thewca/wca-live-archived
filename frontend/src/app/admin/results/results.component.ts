@@ -16,6 +16,7 @@ export class ResultsComponent implements OnInit {
   public competitors$: Observable<any[]>;
   public round$: Observable<Round>;
   public selectedCompetitor: any;
+  public competitionId: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,6 +25,18 @@ export class ResultsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loadRound();
+    this.loadResults();
+    this.loadCompetitors();
+
+    this.route.paramMap.subscribe(params => this.competitionId = params.get('id'));
+  }
+
+  public selectCompetitor(result) {
+    this.selectedCompetitor = { ...result.competitor, registrationId: result.registrationId };
+  }
+
+  public loadRound() {
     this.round$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => this._competitionService.getForId(params.get('id')).pipe(
         map(c => {
@@ -32,19 +45,19 @@ export class ResultsComponent implements OnInit {
         })
       ))
     );
+  }
 
+  public loadResults() {
     this.results$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => this._resultService.getForRound(params.get('id'),params.get('roundId')))
     );
+  }
 
+  public loadCompetitors() {
     this.competitors$ = this.results$.pipe(
       map(results => results.map(r => {
         return { ...r.competitor, registrationId: r.registrationId };
       }))
     );
-  }
-
-  public selectCompetitor(result) {
-    this.selectedCompetitor = { ...result.competitor, registrationId: result.registrationId };
   }
 }
