@@ -3,6 +3,7 @@
     [competitors]="competitors"
     *ngIf="(competitors$ | async) as competitors"
     [competitor]="selectedCompetitor"
+    [round]="round$ | async"
   ></wca-results-input>
 </aside>
 <table>

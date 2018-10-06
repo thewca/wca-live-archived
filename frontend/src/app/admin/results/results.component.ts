@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap, map } from 'rxjs/operators';
 import { ResultService } from '../../common-services/result/result.service';
+import { CompetitionService } from '../../common-services/competition/competition.service';
+import { Round } from '../../models/round.model';
 
 @Component({
   selector: 'wca-results',
@@ -12,12 +14,25 @@ import { ResultService } from '../../common-services/result/result.service';
 export class ResultsComponent implements OnInit {
   public results$: Observable<any[]>;
   public competitors$: Observable<any[]>;
+  public round$: Observable<Round>;
   public selectedCompetitor: any;
 
-  constructor(private route: ActivatedRoute, private readonly _resultService: ResultService) {
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private readonly _resultService: ResultService,
+    private readonly _competitionService: CompetitionService
+  ) {}
 
   ngOnInit() {
+    this.round$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => this._competitionService.getForId(params.get('id')).pipe(
+        map(c => {
+          let [eventId, roundId] = params.get('roundId').split('-r');
+          return c.events.filter(e => e.id.value === eventId)[0].rounds.filter(r => r.id === params.get('roundId'))[0];
+        })
+      ))
+    );
+
     this.results$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => this._resultService.getForRound(params.get('id'),params.get('roundId')))
     );

@@ -2,10 +2,27 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class AverageService {
-  public Mo3() {}
+  public Mo3(results: number[]): number {
+    if (results.length !== 3) {
+      return null;
+    }
+
+    for(var i = 0; i < results.length; i++) {
+      let r = results[i];
+      if (r < 0) {
+        return -1;
+      }
+    }
+
+    let mean = results.reduce((a, b)=> a + b, 0)/3;
+    if (mean >= 10 * 60 * 100) {
+      return Math.round(mean / 100) * 100;
+    }
+    return Math.round(mean);
+  }
 
   public Ao5(results: number[]): number {
-    if (results.length < 3) {
+    if (results.length !== 5) {
       return null;
     }
     let numInvalid = 0;
