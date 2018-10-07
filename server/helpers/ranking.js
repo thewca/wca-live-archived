@@ -1,12 +1,25 @@
 const Result = require('../models/result');
+const Competition = require('../models/competition');
 
 module.exports = async function (ctx) {
   let [ eventId, roundId ] = ctx.params.eventRoundId.split('-r');
+  let competition = await Competition.findOne({ id: ctx.params.competitionId }).exec();
+  let numRounds = competition.events.filter(e => e.id == eventId)[0].rounds.length;
+  let isFinal = numRounds == roundId;
+  let round = competition.events.filter(e => e.id == eventId)[0].rounds.filter(r => r.id == ctx.params.eventRoundId)[0];
   let results = await Result.find({
     competitionId: ctx.params.competitionId,
     eventId: eventId,
     round: roundId
   }).populate('competitor').lean().exec();
+  let advancePercentage = 75;
+  if (round.advancementCondition && round.advancementCondition.type === 'percentage') {
+    advancePercentage = Math.min(advancePercentage, round.advancementCondition.level);
+  }
+  let maxAdvancable = Math.floor((advancePercentage / 100) * results.filter(r => r.solves.length > 0).length);
+  if (round.advancementCondition && round.advancementCondition.type === 'ranking') {
+    maxAdvancable = Math.min(maxAdvancable, round.advancementCondition.level);
+  }
   results.sort((a, b) => {
     let avgA = null;
     let avgB = null;
@@ -103,7 +116,26 @@ module.exports = async function (ctx) {
       }
     }
     r.ranking = currentRanking;
+    if (isFinal && r.ranking <= 3) {
+      r.advancable = true;
+    }
+    if (!isFinal && round.advancementCondition && (round.advancementCondition.type == 'percentage' || round.advancementCondition.type == 'ranking') ) {
+      if (currentRanking + numWithThisRanking <= maxAdvancable) {
+        r.advancable = true;
+      } else {
+        r.advancable = false;
+        // also set advancable to false for everyone with same ranking
+        await Result.updateMany({
+          competitionId: ctx.params.competitionId,
+          eventId: eventId,
+          round: roundId,
+          ranking: currentRanking
+        }, {
+          advancable: false
+        }).exec();
+      }
+    }
     numWithThisRanking++;
-    await Result.findByIdAndUpdate(r._id, { ranking: r.ranking }).exec();
+    await Result.findByIdAndUpdate(r._id, { ranking: r.ranking, advancable: r.advancable }).exec();
   });
 };

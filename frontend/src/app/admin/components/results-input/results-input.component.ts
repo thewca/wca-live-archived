@@ -121,7 +121,7 @@ export class ResultsInputComponent implements OnInit, OnChanges {
   }
 
   public setSelectedCompetitor(competitor: any) {
-    if (competitor.registrationId) {
+    if (competitor == null || competitor.registrationId) {
       this._reset();
       this.selectedCompetitor = competitor;
       this._cd.detectChanges();

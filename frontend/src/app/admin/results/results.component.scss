@@ -41,6 +41,10 @@
 
   .ranking {
     width: 2rem;
+
+    &.advancable {
+      background-color: #0D0;
+    }
   }
 
   .average, .best {

@@ -24,7 +24,7 @@
   </thead>
   <tbody *ngIf="(results$ | async) as results">
     <tr *ngFor="let result of results" (click)="selectCompetitor(result)">
-      <td class="ranking">{{ result.ranking || '&nbsp;' }}</td>
+      <td class="ranking" [class.advancable]="result.advancable">{{ result.ranking || '&nbsp;' }}</td>
       <td class="registationId">{{ result.registrationId }}</td>
       <td>{{ result.competitor.name }}</td>
       <td *ngIf="result.solves.length >= 1">{{ result.solves[0].centiseconds | centiToDisplay }}</td>

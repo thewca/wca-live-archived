@@ -45,6 +45,10 @@ const schema = new mongoose.Schema({
     type: Number,
     min: 1,
     required: false
+  },
+  advancable: {
+    type: Boolean,
+    default: false
   }
 });
 
