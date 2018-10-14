@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, ViewChildren, QueryList, OnChanges, SimpleChanges, ViewChild, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
-import { AverageService } from '../../../common-services/average/average.service';
 import { TimeInputComponent } from '../time-input/time-input.component';
 import { Round } from '../../../models/round.model';
 import { MatButton } from '@angular/material/button';
 import { ResultService } from '../../../common-services/result/result.service';
 import { CompetitorSearchComponent } from '../competitor-search/competitor-search.component';
+import { Ao5, Mo3 } from '@wca/helpers';
 
 @Component({
   selector: 'wca-results-input',
@@ -47,9 +47,9 @@ export class ResultsInputComponent implements OnInit, OnChanges {
     }
     switch (this.round.format) {
       case 'a':
-        return this._averageService.Ao5(this._results);
+        return Ao5(this._results);
       case 'm':
-        return this._averageService.Mo3(this._results);
+        return Mo3(this._results);
       default:
         return null;
     }
@@ -102,7 +102,6 @@ export class ResultsInputComponent implements OnInit, OnChanges {
   }
 
   constructor(
-    private readonly _averageService: AverageService,
     private readonly _cd: ChangeDetectorRef,
     private readonly _resultService: ResultService
   ) { }

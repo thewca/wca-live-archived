@@ -7,7 +7,6 @@ import { TimeService } from './time/time.service';
 import { PersonService } from './person/person.service';
 import { ResultService } from './result/result.service';
 import { CentiToDisplayPipe } from './centiToDisplay.pipe';
-import { AverageService } from './average/average.service';
 
 @NgModule({
   imports: [
@@ -19,8 +18,7 @@ import { AverageService } from './average/average.service';
     CompetitionService,
     TimeService,
     PersonService,
-    ResultService,
-    AverageService
+    ResultService
   ],
   declarations: [
     CentiToDisplayPipe
