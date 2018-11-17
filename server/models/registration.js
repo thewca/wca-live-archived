@@ -7,7 +7,7 @@ const schema = new mongoose.Schema({
     required: true,
     index: true
   },
-  competitorId: {
+  personId: {
     type: Number,
     required: true,
     index: true
@@ -26,7 +26,7 @@ const schema = new mongoose.Schema({
 
 schema.virtual('competitor', {
   ref: 'Person',
-  localField: 'competitorId',
+  localField: 'personId',
   foreignField: 'id',
   justOne: true
 })

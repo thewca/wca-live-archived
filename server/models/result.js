@@ -8,7 +8,7 @@ const schema = new mongoose.Schema({
     index: true,
     required: true
   },
-  competitorId: {
+  personId: {
     type: Number,
     required: true,
     index: true
@@ -33,7 +33,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: false
   },
-  solves: {
+  attempts: {
     type: [SolveTime],
     required: true
   },
@@ -54,7 +54,7 @@ const schema = new mongoose.Schema({
 
 schema.virtual('competitor', {
   ref: 'Person',
-  localField: 'competitorId',
+  localField: 'personId',
   foreignField: 'id',
   justOne: true
 });

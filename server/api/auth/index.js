@@ -182,10 +182,10 @@ const importCompetition = post('/auth/competition/:id', auth, async ctx => {
     if (person.registration && person.registration.status === 'accepted') {
       await Registration.findOneAndUpdate({
         competitionId: ctx.params.id,
-        competitorId: person.id
+        personId: person.id
       }, {
         competitionId: ctx.params.id,
-        competitorId: person.wcaUserId,
+        personId: person.wcaUserId,
         registrantId: person.registrantId,
         events: person.registration.eventIds
       }, { upsert: true });
@@ -197,12 +197,12 @@ const importCompetition = post('/auth/competition/:id', auth, async ctx => {
           registrationId: person.registrantId
         }, {
           competitionId: ctx.params.id,
-          competitorId: person.wcaUserId,
+          personId: person.wcaUserId,
           registrationId: person.registrantId,
           eventId: e,
           round: 1,
           competitorWcaId: person.wcaId,
-          solves: [],
+          attempts: [],
           average: null
         }, { upsert: true });
       });
@@ -226,21 +226,21 @@ const saveResult = put('/competition/:competitionId/:eventRoundId/results/:regis
   let registration = await Registration.findOne({ competitionId: ctx.params.competitionId, registrantId: ctx.params.registrantId }).populate('competitor').exec();
   let result = {
     competitionId: ctx.params.competitionId,
-    competitorId: registration.competitorId,
+    personId: registration.personId,
     registrationId: ctx.params.registrantId,
     eventId: eventId,
     round: roundId,
     competitorWcaId: registration.competitor.wcaId,
-    solves: [],
+    attempts: [],
     average: null
   };
   ctx.data.forEach(r => {
-    result.solves.push({ centiseconds: r });
+    result.attempts.push({ result: r });
   });
   let avg = calcAvg(ctx.data, round);
   if (avg) {
     result.average = {
-      centiseconds: avg
+      result: avg
     };
   }
   await Result.findOneAndUpdate({

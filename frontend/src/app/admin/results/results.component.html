@@ -27,17 +27,17 @@
       <td class="ranking" [class.advancable]="result.advancable">{{ result.ranking || '&nbsp;' }}</td>
       <td class="registationId">{{ result.registrationId }}</td>
       <td>{{ result.competitor.name }}</td>
-      <td *ngIf="result.solves.length >= 1">{{ result.solves[0].centiseconds | centiToDisplay }}</td>
-      <td *ngIf="result.solves.length < 1">&nbsp;</td>
-      <td *ngIf="result.solves.length >= 2">{{ result.solves[1].centiseconds | centiToDisplay }}</td>
-      <td *ngIf="result.solves.length < 2">&nbsp;</td>
-      <td *ngIf="result.solves.length >= 3">{{ result.solves[2].centiseconds | centiToDisplay }}</td>
-      <td *ngIf="result.solves.length < 3">&nbsp;</td>
-      <td *ngIf="result.solves.length >= 4">{{ result.solves[3].centiseconds | centiToDisplay }}</td>
-      <td *ngIf="result.solves.length < 4">&nbsp;</td>
-      <td *ngIf="result.solves.length >= 5">{{ result.solves[4].centiseconds | centiToDisplay }}</td>
-      <td *ngIf="result.solves.length < 5">&nbsp;</td>
-      <td *ngIf="result.average" class="average">{{ result.average.centiseconds | centiToDisplay }}</td>
+      <td *ngIf="result.attempts.length >= 1">{{ result.attempts[0].result | centiToDisplay }}</td>
+      <td *ngIf="result.attempts.length < 1">&nbsp;</td>
+      <td *ngIf="result.attempts.length >= 2">{{ result.attempts[1].result | centiToDisplay }}</td>
+      <td *ngIf="result.attempts.length < 2">&nbsp;</td>
+      <td *ngIf="result.attempts.length >= 3">{{ result.attempts[2].result | centiToDisplay }}</td>
+      <td *ngIf="result.attempts.length < 3">&nbsp;</td>
+      <td *ngIf="result.attempts.length >= 4">{{ result.attempts[3].result | centiToDisplay }}</td>
+      <td *ngIf="result.attempts.length < 4">&nbsp;</td>
+      <td *ngIf="result.attempts.length >= 5">{{ result.attempts[4].result | centiToDisplay }}</td>
+      <td *ngIf="result.attempts.length < 5">&nbsp;</td>
+      <td *ngIf="result.average" class="average">{{ result.average.result | centiToDisplay }}</td>
       <td *ngIf="!result.average">&nbsp;</td>
     </tr>
   </tbody>

@@ -40,7 +40,7 @@ export class ResultsComponent implements OnInit {
     this.round$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => this._competitionService.getForId(params.get('id')).pipe(
         map(c => {
-          let [eventId, roundId] = params.get('roundId').split('-r');
+          const [eventId, roundId] = params.get('roundId').split('-r');
           return c.events.filter(e => e.id.value === eventId)[0].rounds.filter(r => r.id === params.get('roundId'))[0];
         })
       ))
@@ -49,7 +49,7 @@ export class ResultsComponent implements OnInit {
 
   public loadResults() {
     this.results$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => this._resultService.getForRound(params.get('id'),params.get('roundId')))
+      switchMap((params: ParamMap) => this._resultService.getForRound(params.get('id'), params.get('roundId')))
     );
   }
 

@@ -17,8 +17,8 @@ const getForRound = get('/competition/:competitionId/:eventRoundId/results', asy
     }
     if (a.ranking && !b.ranking) return -1;
     if (!a.ranking && b.ranking) return 1;
-    let bestA = Math.min(a.solves.map(s => s.centiseconds));
-    let bestB = Math.min(b.solves.map(s => s.centiseconds));
+    let bestA = Math.min(a.attempts.map(s => s.centiseconds));
+    let bestB = Math.min(b.attempts.map(s => s.centiseconds));
     if (bestA < bestB) return -1;
     if (bestA > bestB) return 1;
     if (a.competitor.name < b.competitor.name) return -1;
