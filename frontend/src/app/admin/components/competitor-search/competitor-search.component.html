@@ -1,5 +1,5 @@
 <mat-form-field appearance="outline">
-  <input type="text" matInput [formControl]="input" [matAutocomplete]="auto" #htmlInput autofocus />
+  <input type="text" matInput [formControl]="input" [matAutocomplete]="auto" #htmlInput="matInput" autofocus />
 </mat-form-field>
 
 <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption [displayWith]="displayFn" (optionSelected)="selected($event)">

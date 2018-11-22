@@ -10,20 +10,26 @@
     top: 64px;
     background-color: white;
   }
-  
+
   th {
     text-align: left;
   }
 
-  th, td {
-    padding: .2rem;
+  th,
+  td {
+    padding: 0.2rem;
   }
 
   .ranking {
     width: 2rem;
+
+    &.advancable {
+      background-color: #0d0;
+    }
   }
 
-  .average, .best {
+  .average,
+  .best {
     font-weight: bold;
   }
 }

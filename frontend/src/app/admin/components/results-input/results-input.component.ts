@@ -1,10 +1,22 @@
-import { Component, OnInit, Input, ViewChildren, QueryList, OnChanges, SimpleChanges, ViewChild, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
-import { TimeInputComponent } from '../time-input/time-input.component';
-import { Round } from '../../../models/round.model';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  QueryList,
+  SimpleChanges,
+  ViewChild,
+  ViewChildren
+} from '@angular/core';
 import { MatButton } from '@angular/material/button';
-import { ResultService } from '../../../common-services/result/result.service';
-import { CompetitorSearchComponent } from '../competitor-search/competitor-search.component';
 import { Ao5, Mo3 } from '@wca/helpers';
+import { ResultService } from '../../../common-services/result/result.service';
+import { Round } from '../../../models/round.model';
+import { CompetitorSearchComponent } from '../competitor-search/competitor-search.component';
+import { TimeInputComponent } from '../time-input/time-input.component';
 
 @Component({
   selector: 'wca-results-input',
@@ -12,10 +24,10 @@ import { Ao5, Mo3 } from '@wca/helpers';
   styleUrls: ['./results-input.component.scss']
 })
 export class ResultsInputComponent implements OnInit, OnChanges {
-
   @Input()
   public competitionId: string;
 
+  // tslint:disable-next-line:no-input-rename
   @Input('competitor')
   public selectedCompetitor: any;
 
@@ -66,8 +78,11 @@ export class ResultsInputComponent implements OnInit, OnChanges {
     if (!this.round.cutoff) {
       return true;
     }
-    for (var i = 0; i < this.round.cutoff.numberOfAttempts; i++) {
-      if (this.results[i] > 0 && this._results[i] < this.round.cutoff.attemptResult) {
+    for (let i = 0; i < this.round.cutoff.numberOfAttempts; i++) {
+      if (
+        this.results[i] > 0 &&
+        this._results[i] < this.round.cutoff.attemptResult
+      ) {
         return true;
       }
     }
@@ -98,23 +113,29 @@ export class ResultsInputComponent implements OnInit, OnChanges {
   }
 
   public get inputComplete(): boolean {
-    return this._results.length === this.numAttempts || (!this.madeCutoff && this._results.length === this.cutoffAttempts);
+    return (
+      this._results.length === this.numAttempts ||
+      (!this.madeCutoff && this._results.length === this.cutoffAttempts)
+    );
   }
 
   constructor(
     private readonly _cd: ChangeDetectorRef,
     private readonly _resultService: ResultService
-  ) { }
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.competitor || changes.selectedCompetitor) {
       this._reset();
-      this.selectedCompetitor = (changes.competitor || changes.selectedCompetitor).currentValue;
+      this.selectedCompetitor = (
+        changes.competitor || changes.selectedCompetitor
+      ).currentValue;
       this._cd.detectChanges();
-      document.activeElement && (document.activeElement as any).blur();
+      if (document.activeElement) {
+        (document.activeElement as any).blur();
+      }
       this.setFocussed(1);
     }
   }
@@ -124,7 +145,9 @@ export class ResultsInputComponent implements OnInit, OnChanges {
       this._reset();
       this.selectedCompetitor = competitor;
       this._cd.detectChanges();
-      document.activeElement && (document.activeElement as any).blur();
+      if (document.activeElement) {
+        (document.activeElement as any).blur();
+      }
       this.setFocussed(1);
     }
   }
@@ -142,13 +165,15 @@ export class ResultsInputComponent implements OnInit, OnChanges {
   public setFocussed(attempt: number) {
     this._currentAttempt = attempt;
     if (this._inputs) {
-      let input = this._inputs.toArray()[this._currentAttempt - 1];
-      if (input) input.onFocus();
+      const input = this._inputs.toArray()[this._currentAttempt - 1];
+      if (input) {
+        input.onFocus();
+      }
     }
   }
 
   public setResult(attempt: number, centi: number) {
-    if (centi == null || centi == undefined || Number.isNaN(centi)) {
+    if (centi == null || centi === undefined || Number.isNaN(centi)) {
       return;
     }
     this._results[attempt - 1] = centi;
@@ -161,12 +186,20 @@ export class ResultsInputComponent implements OnInit, OnChanges {
   }
 
   public saveResults() {
-    this._resultService.saveResult(this.competitionId, this.round.id, this.selectedCompetitor.registrationId, this._results).subscribe(() => {
-      this._reset();
-      this.selectedCompetitor = null;
-      this.done.emit();
-      this._search.focus();
-    });
+    this._resultService
+      .saveResult(
+        this.competitionId,
+        this.round.id,
+        this.selectedCompetitor.registrationId,
+        this._results
+      )
+      .subscribe(() => {
+        this._reset();
+        this.selectedCompetitor = null;
+        this.done.emit();
+        this._search.focus();
+        this._cd.detectChanges();
+      });
   }
 
   private _reset() {
@@ -177,5 +210,4 @@ export class ResultsInputComponent implements OnInit, OnChanges {
     }
     this._cd.detectChanges();
   }
-
 }
