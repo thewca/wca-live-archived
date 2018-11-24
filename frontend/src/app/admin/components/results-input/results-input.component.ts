@@ -197,8 +197,8 @@ export class ResultsInputComponent implements OnInit, OnChanges {
         this._reset();
         this.selectedCompetitor = null;
         this.done.emit();
-        this._search.focus();
         this._cd.detectChanges();
+        this._search.focus();
       });
   }
 

@@ -20,25 +20,44 @@
       <th>Solve 4</th>
       <th>Solve 5</th>
       <th>Average</th>
+      <th>Best</th>
     </tr>
   </thead>
   <tbody *ngIf="(results$ | async) as results">
     <tr *ngFor="let result of results" (click)="selectCompetitor(result)">
-      <td class="ranking" [class.advancable]="result.advancable">{{ result.ranking || '&nbsp;' }}</td>
+      <td class="ranking" [class.advancable]="result.advancable">
+        {{ result.ranking || '&nbsp;' }}
+      </td>
       <td class="registationId">{{ result.registrationId }}</td>
       <td>{{ result.competitor.name }}</td>
-      <td *ngIf="result.attempts.length >= 1">{{ result.attempts[0].result | centiToDisplay }}</td>
+      <td *ngIf="result.attempts.length >= 1">
+        {{ result.attempts[0].result | centiToDisplay }}
+      </td>
       <td *ngIf="result.attempts.length < 1">&nbsp;</td>
-      <td *ngIf="result.attempts.length >= 2">{{ result.attempts[1].result | centiToDisplay }}</td>
+      <td *ngIf="result.attempts.length >= 2">
+        {{ result.attempts[1].result | centiToDisplay }}
+      </td>
       <td *ngIf="result.attempts.length < 2">&nbsp;</td>
-      <td *ngIf="result.attempts.length >= 3">{{ result.attempts[2].result | centiToDisplay }}</td>
+      <td *ngIf="result.attempts.length >= 3">
+        {{ result.attempts[2].result | centiToDisplay }}
+      </td>
       <td *ngIf="result.attempts.length < 3">&nbsp;</td>
-      <td *ngIf="result.attempts.length >= 4">{{ result.attempts[3].result | centiToDisplay }}</td>
+      <td *ngIf="result.attempts.length >= 4">
+        {{ result.attempts[3].result | centiToDisplay }}
+      </td>
       <td *ngIf="result.attempts.length < 4">&nbsp;</td>
-      <td *ngIf="result.attempts.length >= 5">{{ result.attempts[4].result | centiToDisplay }}</td>
+      <td *ngIf="result.attempts.length >= 5">
+        {{ result.attempts[4].result | centiToDisplay }}
+      </td>
       <td *ngIf="result.attempts.length < 5">&nbsp;</td>
-      <td *ngIf="result.average" class="average">{{ result.average.result | centiToDisplay }}</td>
+      <td *ngIf="result.average" class="average">
+        {{ result.average.result | centiToDisplay }}
+      </td>
       <td *ngIf="!result.average">&nbsp;</td>
+      <td *ngIf="result.attempts.length > 0" class="best">
+        {{ getBest(result) | centiToDisplay }}
+      </td>
+      <td *ngIf="result.attempts.length === 0" class="best">&nbsp;</td>
     </tr>
   </tbody>
 </table>

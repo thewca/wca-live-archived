@@ -1,5 +1,4 @@
 :host {
-
   display: flex;
   flex-flow: row nowrap;
   align-items: flex-start;
@@ -35,19 +34,20 @@
     text-align: left;
   }
 
-  th, td {
-    padding: .2rem;
+  th,
+  td {
+    padding: 0.2rem;
   }
 
   .ranking {
     width: 2rem;
 
     &.advancable {
-      background-color: #0D0;
+      background-color: #0d0;
     }
   }
 
-  .average, .best {
+  .average {
     font-weight: bold;
   }
 }

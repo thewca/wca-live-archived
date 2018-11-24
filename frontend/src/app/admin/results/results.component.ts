@@ -29,35 +29,52 @@ export class ResultsComponent implements OnInit {
     this.loadResults();
     this.loadCompetitors();
 
-    this.route.paramMap.subscribe(params => this.competitionId = params.get('id'));
+    this.route.paramMap.subscribe(
+      params => (this.competitionId = params.get('id'))
+    );
   }
 
   public selectCompetitor(result) {
-    this.selectedCompetitor = { ...result.competitor, registrationId: result.registrationId };
+    this.selectedCompetitor = {
+      ...result.competitor,
+      registrationId: result.registrationId
+    };
   }
 
   public loadRound() {
     this.round$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => this._competitionService.getForId(params.get('id')).pipe(
-        map(c => {
-          const [eventId, roundId] = params.get('roundId').split('-r');
-          return c.events.filter(e => e.id.value === eventId)[0].rounds.filter(r => r.id === params.get('roundId'))[0];
-        })
-      ))
+      switchMap((params: ParamMap) =>
+        this._competitionService.getForId(params.get('id')).pipe(
+          map(c => {
+            const [eventId, roundId] = params.get('roundId').split('-r');
+            return c.events
+              .filter(e => e.id.value === eventId)[0]
+              .rounds.filter(r => r.id === params.get('roundId'))[0];
+          })
+        )
+      )
     );
   }
 
   public loadResults() {
     this.results$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => this._resultService.getForRound(params.get('id'), params.get('roundId')))
+      switchMap((params: ParamMap) =>
+        this._resultService.getForRound(params.get('id'), params.get('roundId'))
+      )
     );
   }
 
   public loadCompetitors() {
     this.competitors$ = this.results$.pipe(
-      map(results => results.map(r => {
-        return { ...r.competitor, registrationId: r.registrationId };
-      }))
+      map(results =>
+        results.map(r => {
+          return { ...r.competitor, registrationId: r.registrationId };
+        })
+      )
     );
+  }
+
+  public getBest(result: any) {
+    return Math.min(...result.attempts.map(a => a.result));
   }
 }
