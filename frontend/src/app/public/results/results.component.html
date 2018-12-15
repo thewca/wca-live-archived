@@ -1,3 +1,6 @@
+<a mat-raised-button color="secondary" routerLink="../.."
+  ><mat-icon>arrow_back</mat-icon> Back to competition</a
+>
 <table>
   <thead>
     <tr>
@@ -18,31 +21,61 @@
         {{ result.ranking || '&nbsp;' }}
       </td>
       <td>{{ result.competitor.name }}</td>
-      <td *ngIf="result.attempts.length >= 1" [class.pr]="isPR(result, 0, 'single')">
+      <td
+        *ngIf="result.attempts.length >= 1"
+        [class.pr]="isPR(result, 0, 'single')"
+      >
         {{ result.attempts[0].result | centiToDisplay }}
       </td>
       <td *ngIf="result.attempts.length < 1">&nbsp;</td>
-      <td *ngIf="result.attempts.length >= 2" [class.pr]="isPR(result, 1, 'single')">
+      <td
+        *ngIf="result.attempts.length >= 2"
+        [class.pr]="isPR(result, 1, 'single')"
+      >
         {{ result.attempts[1].result | centiToDisplay }}
       </td>
       <td *ngIf="result.attempts.length < 2">&nbsp;</td>
-      <td *ngIf="result.attempts.length >= 3" [class.pr]="isPR(result, 2, 'single')">
+      <td
+        *ngIf="result.attempts.length >= 3"
+        [class.pr]="isPR(result, 2, 'single')"
+      >
         {{ result.attempts[2].result | centiToDisplay }}
       </td>
       <td *ngIf="result.attempts.length < 3">&nbsp;</td>
-      <td *ngIf="result.attempts.length >= 4" [class.pr]="isPR(result, 3, 'single')">
+      <td
+        *ngIf="result.attempts.length >= 4"
+        [class.pr]="isPR(result, 3, 'single')"
+      >
         {{ result.attempts[3].result | centiToDisplay }}
       </td>
       <td *ngIf="result.attempts.length < 4">&nbsp;</td>
-      <td *ngIf="result.attempts.length >= 5" [class.pr]="isPR(result, 4, 'single')">
+      <td
+        *ngIf="result.attempts.length >= 5"
+        [class.pr]="isPR(result, 4, 'single')"
+      >
         {{ result.attempts[4].result | centiToDisplay }}
       </td>
       <td *ngIf="result.attempts.length < 5">&nbsp;</td>
-      <td *ngIf="result.average" class="average" [class.pr]="isPR(result, 0, 'average')">
+      <td
+        *ngIf="result.average"
+        class="average"
+        [class.pr]="isPR(result, 0, 'average')"
+      >
         {{ result.average.result | centiToDisplay }}
       </td>
       <td *ngIf="!result.average">&nbsp;</td>
-      <td *ngIf="result.attempts.length > 0" [class.pr]="isPR(result, 0, 'single') || isPR(result, 1, 'single') || isPR(result, 2, 'single') || isPR(result, 3, 'single') || isPR(result, 4, 'single')">{{ getBest(result) | centiToDisplay }}</td>
+      <td
+        *ngIf="result.attempts.length > 0"
+        [class.pr]="
+          isPR(result, 0, 'single') ||
+          isPR(result, 1, 'single') ||
+          isPR(result, 2, 'single') ||
+          isPR(result, 3, 'single') ||
+          isPR(result, 4, 'single')
+        "
+      >
+        {{ getBest(result) | centiToDisplay }}
+      </td>
       <td *ngIf="result.attempts.length === 0">&nbsp;</td>
     </tr>
   </tbody>

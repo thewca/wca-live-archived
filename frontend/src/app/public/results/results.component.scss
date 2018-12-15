@@ -1,4 +1,12 @@
 :host {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  a {
+    margin: 1rem;
+  }
+
   table {
     width: 85vw;
     flex: 1 1 85vw;
@@ -35,5 +43,11 @@
 
   .pr {
     color: #fc4a0a;
+  }
+}
+
+@media (max-width: 599px) {
+  :host thead th {
+    top: 56px;
   }
 }
