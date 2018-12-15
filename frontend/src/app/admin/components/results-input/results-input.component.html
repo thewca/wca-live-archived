@@ -4,11 +4,11 @@
   (change)="setSelectedCompetitor($event)"
 ></wca-competitor-search>
 
-<wca-time-input attempt="1" [disabled]="isAttemptDisabled(1)" (focus)="setFocussed(1)" (changed)="setResult(1, $event)" *ngIf="numAttempts >= 1"></wca-time-input>
-<wca-time-input attempt="2" [disabled]="isAttemptDisabled(2)" (focus)="setFocussed(2)" (changed)="setResult(2, $event)" *ngIf="numAttempts >= 2"></wca-time-input>
-<wca-time-input attempt="3" [disabled]="isAttemptDisabled(3)" (focus)="setFocussed(3)" (changed)="setResult(3, $event)" *ngIf="numAttempts >= 3"></wca-time-input>
-<wca-time-input attempt="4" [disabled]="isAttemptDisabled(4)" (focus)="setFocussed(4)" (changed)="setResult(4, $event)" *ngIf="numAttempts >= 4"></wca-time-input>
-<wca-time-input attempt="5" [disabled]="isAttemptDisabled(5)" (focus)="setFocussed(5)" (changed)="setResult(5, $event)" *ngIf="numAttempts >= 5"></wca-time-input>
+<wca-time-input attempt="1" [disabled]="isAttemptDisabled(1)" (previous)="setFocussed(0)" (focus)="setFocussed(1)" (changed)="setResult(1, $event)" *ngIf="numAttempts >= 1"></wca-time-input>
+<wca-time-input attempt="2" [disabled]="isAttemptDisabled(2)" (previous)="setFocussed(1)" (focus)="setFocussed(2)" (changed)="setResult(2, $event)" *ngIf="numAttempts >= 2"></wca-time-input>
+<wca-time-input attempt="3" [disabled]="isAttemptDisabled(3)" (previous)="setFocussed(2)" (focus)="setFocussed(3)" (changed)="setResult(3, $event)" *ngIf="numAttempts >= 3"></wca-time-input>
+<wca-time-input attempt="4" [disabled]="isAttemptDisabled(4)" (previous)="setFocussed(3)" (focus)="setFocussed(4)" (changed)="setResult(4, $event)" *ngIf="numAttempts >= 4"></wca-time-input>
+<wca-time-input attempt="5" [disabled]="isAttemptDisabled(5)" (previous)="setFocussed(4)" (focus)="setFocussed(5)" (changed)="setResult(5, $event)" *ngIf="numAttempts >= 5"></wca-time-input>
 
 <span *ngIf="average">{{ average }}</span>
 

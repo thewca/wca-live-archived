@@ -164,6 +164,9 @@ export class ResultsInputComponent implements OnInit, OnChanges {
 
   public setFocussed(attempt: number) {
     this._currentAttempt = attempt;
+    if (attempt === 0) {
+      return this._search.focus();
+    }
     if (this._inputs) {
       const input = this._inputs.toArray()[this._currentAttempt - 1];
       if (input) {

@@ -20,6 +20,9 @@ export class TimeInputComponent implements OnInit {
   @Output()
   public focus: EventEmitter<void> = new EventEmitter<void>();
 
+  @Output()
+  public previous: EventEmitter<void> = new EventEmitter<void>();
+
   @ViewChild('input')
   private _input: ElementRef<HTMLInputElement>;
 
@@ -39,9 +42,15 @@ export class TimeInputComponent implements OnInit {
 
   @HostListener('keyup.enter')
   @HostListener('keyup.tab')
+  @HostListener('keyup.down')
   @HostListener('blur')
   public _done() {
     this.changed.emit(this._timeService.inputToCenti(this._input.nativeElement.value));
+  }
+
+  @HostListener('keyup.up')
+  public prev() {
+    this.previous.emit();
   }
 
 }
