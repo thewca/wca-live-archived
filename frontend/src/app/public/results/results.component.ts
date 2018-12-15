@@ -14,32 +14,49 @@ export class ResultsComponent implements OnInit {
 
   private _eventId: string;
 
-  constructor(private route: ActivatedRoute, private readonly _resultService: ResultService) {
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private readonly _resultService: ResultService
+  ) {}
 
   ngOnInit() {
     this.results$ = this.route.paramMap.pipe(
-      tap(params => this._eventId = params.get('roundId').split('-')[0]),
-      switchMap((params: ParamMap) => this._resultService.getForRound(params.get('id'),params.get('roundId')))
+      tap(params => (this._eventId = params.get('roundId').split('-')[0])),
+      switchMap((params: ParamMap) =>
+        this._resultService.getForRound(params.get('id'), params.get('roundId'))
+      )
     );
   }
 
   public isBest(result: any, attempt: number): boolean {
-    let res = result.attempts[attempt].result;
-    return res === this.getBest(result) && (result.attempts.map(a => a.result) as number[]).indexOf(res) === attempt;
+    const res = result.attempts[attempt].result;
+    return (
+      res === this.getBest(result) &&
+      (result.attempts.map(a => a.result) as number[]).indexOf(res) === attempt
+    );
   }
 
   public getBest(result: any): number {
     return Math.min(...result.attempts.map(a => a.result).filter(r => r > 0));
   }
 
-  public isPR(result: any, attempt: number, type: 'single' | 'average' = 'single'): boolean {
+  public isPR(
+    result: any,
+    attempt: number,
+    type: 'single' | 'average' = 'single'
+  ): boolean {
+    const eventBests = result.competitor.personalBests.filter(
+      pb => pb.eventId === this._eventId && pb.type === type
+    );
+    if (!result.competitor || eventBests.length === 0) {
+      return type === 'single' ? this.isBest(result, attempt) : true;
+    }
     switch (type) {
       case 'single':
-        let res = result.attempts[attempt].result;
-        return this.isBest(result, attempt) && res < result.competitor.personalBests.filter(pb => pb.eventId === this._eventId && pb.type === type)[0].best;
+        const res = result.attempts[attempt].result;
+        return this.isBest(result, attempt) && res < eventBests[0].best;
       case 'average':
-        return result.average.result < result.competitor.personalBests.filter(pb => pb.eventId === this._eventId && pb.type === type)[0].best;
+        return result.average.result < eventBests[0].best;
     }
   }
 }

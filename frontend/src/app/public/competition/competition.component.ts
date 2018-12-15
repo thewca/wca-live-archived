@@ -98,23 +98,15 @@ export class CompetitionComponent implements OnInit {
     type: 'single' | 'average' = 'single',
     competitor: any
   ): boolean {
+    const eventBests = competitor.personalBests.filter(
+      pb => pb.eventId === result.eventId && pb.type === type
+    );
     switch (type) {
       case 'single':
         const res = result.attempts[attempt].result;
-        return (
-          this.isBest(result, attempt) &&
-          res <
-            competitor.personalBests.filter(
-              pb => pb.eventId === result.eventId && pb.type === type
-            )[0].best
-        );
+        return this.isBest(result, attempt) && res < eventBests[0].best;
       case 'average':
-        return (
-          result.average.result <
-          competitor.personalBests.filter(
-            pb => pb.eventId === result.eventId && pb.type === type
-          )[0].best
-        );
+        return result.average.result < eventBests[0].best;
     }
   }
 }
