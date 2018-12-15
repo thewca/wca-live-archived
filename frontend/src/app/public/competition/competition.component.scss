@@ -2,3 +2,41 @@ h2 {
   padding-left: 1rem;
   padding-right: 1rem;
 }
+
+table {
+  width: 85vw;
+  flex: 1 1 85vw;
+  position: relative;
+}
+
+thead th {
+  position: sticky;
+  top: 64px;
+  background-color: white;
+}
+
+th {
+  text-align: left;
+}
+
+th,
+td {
+  padding: 0.2rem;
+}
+
+.ranking {
+  width: 2rem;
+
+  &.advancable {
+    background-color: #0d0;
+  }
+}
+
+.average,
+.best {
+  font-weight: bold;
+}
+
+.pr {
+  color: #fc4a0a;
+}

@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Observable, of } from "rxjs";
-import { tap } from "rxjs/operators";
-import { environment } from "../../../environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class ResultService {
@@ -12,16 +12,22 @@ export class ResultService {
 
   constructor(private readonly _http: HttpClient) {}
 
-  public getForCompetitor(competitionId: string, registrantId: number, skipCache = false): Observable<any[]> {
-    let key = competitionId + '-' + registrantId;
+  public getForCompetitor(
+    competitionId: string,
+    registrantId: number,
+    skipCache = false
+  ): Observable<any[]> {
+    const key = competitionId + '-' + registrantId;
     if (this._resultsPerRegistrant.hasOwnProperty(key) && !skipCache) {
       return of(this._resultsPerRegistrant[key]);
     }
-    let url = `${environment.apiUrl}competition/${competitionId}/competitors/${registrantId}/results`;
+    const url = `${
+      environment.apiUrl
+    }competition/${competitionId}/competitors/${registrantId}/results`;
     if (this.running.hasOwnProperty(url)) {
       return this.running[url];
     }
-    let o = this._http.get<any[]>(url).pipe(
+    const o = this._http.get<any[]>(url).pipe(
       tap(results => {
         delete this.running[url];
         this._resultsPerRegistrant[key] = results;
@@ -31,16 +37,22 @@ export class ResultService {
     return o;
   }
 
-  public getForRound(competitionId: string, eventRoundId: string, skipCache = false): Observable<any[]> {
-    let key = competitionId + '-' + eventRoundId;
+  public getForRound(
+    competitionId: string,
+    eventRoundId: string,
+    skipCache = false
+  ): Observable<any[]> {
+    const key = competitionId + '-' + eventRoundId;
     if (this._resultsPerRound.hasOwnProperty(key)) {
       return of(this._resultsPerRound[key]);
     }
-    let url = `${environment.apiUrl}competition/${competitionId}/${eventRoundId}/results`;
+    const url = `${
+      environment.apiUrl
+    }competition/${competitionId}/${eventRoundId}/results`;
     if (this.running.hasOwnProperty(url)) {
       return this.running[url];
     }
-    let o = this._http.get<any[]>(url).pipe(
+    const o = this._http.get<any[]>(url).pipe(
       tap(results => {
         delete this.running[url];
         this._resultsPerRound[key] = results;
@@ -50,9 +62,16 @@ export class ResultService {
     return o;
   }
 
-  public saveResult(competitionId: string, eventRoundId: string, registrationId: number, results: number[]): Observable<any> {
-    let url = `${environment.apiUrl}competition/${competitionId}/${eventRoundId}/results/${registrationId}`;
-    let key = competitionId + '-' + eventRoundId;
+  public saveResult(
+    competitionId: string,
+    eventRoundId: string,
+    registrationId: number,
+    results: number[]
+  ): Observable<any> {
+    const url = `${
+      environment.apiUrl
+    }competition/${competitionId}/${eventRoundId}/results/${registrationId}`;
+    const key = competitionId + '-' + eventRoundId;
     delete this._resultsPerRound[key];
     return this._http.put(url, results, { withCredentials: true });
   }
