@@ -18,4 +18,4 @@ import { ResultsComponent } from './results/results.component';
   declarations: [CompetitionsComponent, CompetitionComponent, ResultsComponent],
   entryComponents: [CompetitionsComponent]
 })
-export class PublicModule { }
+export class PublicModule {}
